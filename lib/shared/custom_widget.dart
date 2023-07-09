@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+// ignore: must_be_immutable
 class CustomInputFieldwithlabel extends StatefulWidget {
   final String hinttext; //hint text for email and password input fields.
   final String label; //label text
   final FormFieldValidator<String> validator;
   final TextEditingController controller;
-  final ValueChanged<String> onchanged;
+  // final  ValueChanged<String> onchanged;
+  final Function(String) onchanged;
   bool isPassword;
 
   //FormFieldValidator<String> is a
@@ -34,7 +36,6 @@ bool ishidden = true;
 class _CustomInputFieldwithlabelState extends State<CustomInputFieldwithlabel> {
   @override
   Widget build(BuildContext context) {
-   
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -47,29 +48,29 @@ class _CustomInputFieldwithlabelState extends State<CustomInputFieldwithlabel> {
           ),
         ),
         TextFormField(
-          onChanged: widget.onchanged,
-         
-          obscureText: widget.isPassword ? ishidden : false,
-          controller: widget.controller,
-          validator: widget.validator,
-          decoration: InputDecoration(
-            suffixIcon: widget.isPassword
-                ? InkWell(
-                    onTap: () {
-                      setState(() {
-                        ishidden = !ishidden;
-                      });
-                    },
-                    child: ishidden
-                        ? const Icon(Icons.visibility)
-                        : const Icon(Icons.visibility_off))
-                : const SizedBox(),
-            hintStyle: const TextStyle(
-              color: Color.fromARGB(255, 120, 117, 117),
-            ),
-            hintText: widget.hinttext,
-          ),
-        ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            onChanged: widget.onchanged,
+            obscureText: widget.isPassword ? ishidden : false,
+            controller: widget.controller,
+            validator: widget.validator,
+            decoration: InputDecoration(
+              errorMaxLines: 2,
+              suffixIcon: widget.isPassword
+                  ? InkWell(
+                      onTap: () {
+                        setState(() {
+                          ishidden = !ishidden;
+                        });
+                      },
+                      child: ishidden
+                          ? const Icon(Icons.visibility)
+                          : const Icon(Icons.visibility_off))
+                  : const SizedBox(),
+              hintStyle: const TextStyle(
+                color: Color.fromARGB(255, 120, 117, 117),
+              ),
+              hintText: widget.hinttext,
+            )),
       ],
     );
   }
@@ -201,6 +202,7 @@ class CustomButtonWithIcon extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class CustomContainerWithInputField extends StatelessWidget {
   final TextEditingController? controller;
   final String label;
@@ -208,7 +210,6 @@ class CustomContainerWithInputField extends StatelessWidget {
   final InputDecoration decoration;
   final String image;
   bool? enable;
-
   final IconData? icon;
 
   CustomContainerWithInputField(
