@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:rpsbloc/homepage/view/homepage_view.dart';
 import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
-import '../../homepage.dart';
+
 import 'package:rpsbloc/shared/custom_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class LoginPageView extends StatefulWidget {
+  const LoginPageView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<LoginPageView> createState() => _LoginPageViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginPageViewState extends State<LoginPageView> {
   TextEditingController passwordController = TextEditingController();
 
   TextEditingController emailController = TextEditingController();
@@ -132,7 +133,7 @@ class _LoginViewState extends State<LoginView> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const Homepage()));
+                                                const HomePageView()));
                                   }
                                 }
 
@@ -256,7 +257,7 @@ class _LoginViewState extends State<LoginView> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const LoginView()));
+                                                const LoginPageView()));
                                   },
                                   child: const Text(
                                     'Sign Up',

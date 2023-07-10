@@ -4,14 +4,14 @@ import 'package:rpsbloc/loginpage/view/login_view.dart';
 import 'package:rpsbloc/registerpage/bloc/register_bloc.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class RegisterPageView extends StatefulWidget {
+  const RegisterPageView({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<RegisterPageView> createState() => _RegisterPageViewState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterPageViewState extends State<RegisterPageView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -191,7 +191,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const LoginView()));
+                                              const LoginPageView()));
                                 } else if (state is RegisterError) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(state.message)));
@@ -201,8 +201,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 if (state is RegisterInitial) {
                                   if (isEmailValueChanged == true &&
                                       isPasswordValueChanged == true &&
-                                      isConfirmPasswordValueChanged == true &&
-                                      passwordController == emailController) {
+                                      isConfirmPasswordValueChanged == true) {
                                     return CustomButtonwithlabel(
                                       label: 'Register',
                                       color:
@@ -314,7 +313,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const LoginView()));
+                                                const LoginPageView()));
                                   },
                                   child: const Text(
                                     'Sign In',

@@ -20,9 +20,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       final response = await registerRepository.registerapi(
           event.email, event.password, event.confirmpassword);
 
-      if (response is CredentialMismatchedException) {
-        emit(RegisterError(response.errormessage));
-      } else if (response is UnauthorizedException) {
+      // if (response is CredentialMismatchedException) {
+      //   emit(RegisterError(response.errormessage));
+      // }
+      if (response is UnauthorizedException) {
         emit(RegisterError(response.errormessage));
       } else if (response is NotFoundException) {
         emit(RegisterError(response.errormessage));

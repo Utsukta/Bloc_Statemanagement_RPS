@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:rpsbloc/error/exceptions.dart';
-import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
 import 'package:rpsbloc/loginpage/model/login_model.dart';
 import '../view/login_view.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -9,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginRepository {
-  final loginview = const LoginView();
+  final loginview = const LoginPageView();
   final storetoken = const FlutterSecureStorage();
 
   Future loginapi(String email, String password) async {
@@ -36,7 +35,6 @@ class LoginRepository {
       final response = await http.post(
           Uri.parse('https://rpsremit.truestreamz.com/api/v1/login/'),
           body: loginmodel.toJson());
-      print(response.statusCode);
 
       if (response.statusCode == 200) {
         var responsedata = jsonDecode(response.body);
@@ -44,7 +42,6 @@ class LoginRepository {
         await storetoken.write(key: 'token', value: accesstoken);
         return response;
       } else if (response.statusCode == 422) {
-        // return LoginErrorState(CredentialMismatchedException().errormessage);
         return CredentialMismatchedException();
       } else if (response.statusCode == 400) {
         return BadRequestException();
@@ -56,7 +53,7 @@ class LoginRepository {
         return ServerErrorException();
       }
     } catch (e) {
-      throw e.toString();
+      throw '$e.toString()';
     }
   }
 }

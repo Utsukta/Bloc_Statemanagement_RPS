@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rpsbloc/error/exceptions.dart';
+
 import 'package:rpsbloc/loginpage/repository/login_api.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final loginRepository = LoginRepository();
+
   LoginBloc() : super(LoginInitial()) {
     on<LoginButtonCLickedEvent>(loginButtonCLickedEvent);
   }
@@ -18,9 +20,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       final response =
           await loginRepository.loginapi(event.email, event.password);
-      print(response);
-
-
 
       if (response is CredentialMismatchedException) {
         emit(LoginErrorState(response.errormessage));
