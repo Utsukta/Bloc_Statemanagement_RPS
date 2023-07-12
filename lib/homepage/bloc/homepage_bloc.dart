@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rpsbloc/error/exceptions.dart';
@@ -24,22 +25,28 @@ class HomepageBloc extends Bloc<HomepageEvent, HomepageState> {
       final quicksend = homepagerepository.quicksends;
       final transaction = homepagerepository.transaction;
 
-      if (response is CredentialMismatchedException) {
-        emit(HomepageError(response.errormessage));
-      } else if (response is UnauthorizedException) {
-        emit(HomepageError(response.errormessage));
-      } else if (response is NotFoundException) {
-        emit(HomepageError(response.errormessage));
-      } else if (response is ServerErrorException) {
-        emit(HomepageError(response.errormessage));
-      } else if (response is BadRequestException) {
-        emit(HomepageError(response.errormessage));
-      } else {
-        emit(HomepageSuccess(
-            response, userdetails!, services!, quicksend!, transaction!));
-      }
-    } catch (e) {
-      emit(HomepageError(e.toString()));
+      emit(HomepageSuccess(
+          response, userdetails!, services!, quicksend!, transaction!));
+    } on CredentialMismatchedException {
+      emit(HomepageError("Credential Mismatched"));
+    } on SocketException {
+      emit(HomepageError("No Internet Connection"));
+    } on BadRequestException {
+      emit(HomepageError("Bad Request"));
+    } on UnauthorizedException {
+      emit(HomepageError("Authentication is required"));
+    } on ForbiddenException {
+      emit(HomepageError("Dorbidden"));
+    } on NotFoundException {
+      emit(HomepageError("Not Found"));
+    } on ServerErrorException {
+      emit(HomepageError("Cannot handle the request"));
+    } on BadGatewayException {
+      emit(HomepageError("Bad Gateway"));
+    } on ServiceUnavaiableException {
+      emit(HomepageError("Service is not available"));
+    } on Exception {
+      emit(HomepageError("Error has occuured"));
     }
   }
 }

@@ -147,13 +147,7 @@ class _LoginPageViewState extends State<LoginPageView> {
                               },
                               builder: (context, state) {
                                 if (state is LoginInitial) {
-                                  if (isPasswordValueChanged == false &&
-                                      isEmailValueChanged == false) {
-                                    return CustomButtonwithlabel(
-                                        color: Colors.grey,
-                                        label: 'Login',
-                                        onPressed: () {});
-                                  } else if (isPasswordValueChanged == true &&
+                                  if (isPasswordValueChanged == true &&
                                       isEmailValueChanged == true) {
                                     return CustomButtonwithlabel(
                                         label: 'Login',
@@ -200,6 +194,10 @@ class _LoginPageViewState extends State<LoginPageView> {
                                       }
                                     },
                                   );
+                                }
+                                if (state is LoginSuccessState) {
+                                  return CustomButtonwithlabel(
+                                      label: 'Log In', onPressed: () {});
                                 }
 
                                 return CustomButtonwithlabel(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rpsbloc/error/exceptions.dart';
 
@@ -18,24 +19,29 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoadingState());
 
     try {
-      final response =
-          await loginRepository.loginapi(event.email, event.password);
+      await loginRepository.loginapi(event.email, event.password);
 
-      if (response is CredentialMismatchedException) {
-        emit(LoginErrorState(response.errormessage));
-      } else if (response is UnauthorizedException) {
-        emit(LoginErrorState(response.errormessage));
-      } else if (response is NotFoundException) {
-        emit(LoginErrorState(response.errormessage));
-      } else if (response is ServerErrorException) {
-        emit(LoginErrorState(response.errormessage));
-      } else if (response is BadRequestException) {
-        emit(LoginErrorState(response.errormessage));
-      } else {
-        emit(LoginSuccessState());
-      }
-    } catch (e) {
-      emit(LoginErrorState(e.toString()));
+      emit(LoginSuccessState());
+    } on CredentialMismatchedException {
+      emit(LoginErrorState("Credential Mismatched"));
+    } on SocketException {
+      emit(LoginErrorState("No Internet Connection"));
+    } on BadRequestException {
+      emit(LoginErrorState("Bad Request"));
+    } on UnauthorizedException {
+      emit(LoginErrorState("Authentication is required"));
+    } on ForbiddenException {
+      emit(LoginErrorState("Forbidden"));
+    } on NotFoundException {
+      emit(LoginErrorState("Not Found"));
+    } on ServerErrorException {
+      emit(LoginErrorState("Cannot handle the request"));
+    } on BadGatewayException {
+      emit(LoginErrorState("Bad Gateway"));
+    } on ServiceUnavaiableException {
+      emit(LoginErrorState("Service is not available"));
+    } on Exception {
+      emit(LoginErrorState("Error has occuured"));
     }
   }
 }

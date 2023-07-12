@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rpsbloc/error/exceptions.dart';
@@ -19,23 +20,27 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     try {
       final response = await registerRepository.registerapi(
           event.email, event.password, event.confirmpassword);
-
-      // if (response is CredentialMismatchedException) {
-      //   emit(RegisterError(response.errormessage));
-      // }
-      if (response is UnauthorizedException) {
-        emit(RegisterError(response.errormessage));
-      } else if (response is NotFoundException) {
-        emit(RegisterError(response.errormessage));
-      } else if (response is ServerErrorException) {
-        emit(RegisterError(response.errormessage));
-      } else if (response is BadRequestException) {
-        emit(RegisterError(response.errormessage));
-      } else {
-        emit(RegisterSuccess());
-      }
-    } catch (e) {
-      throw e.toString();
+      emit(RegisterSuccess());
+    } on CredentialMismatchedException {
+      emit(RegisterError("Credential Mismatched"));
+    } on SocketException {
+      emit(RegisterError("No Internet Connection"));
+    } on BadRequestException {
+      emit(RegisterError("Bad Request"));
+    } on UnauthorizedException {
+      emit(RegisterError("Authentication is required"));
+    } on ForbiddenException {
+      emit(RegisterError("Forbidden"));
+    } on NotFoundException {
+      emit(RegisterError("Not Found"));
+    } on ServerErrorException {
+      emit(RegisterError("Cannot handle the request"));
+    } on BadGatewayException {
+      emit(RegisterError("Bad Gateway"));
+    } on ServiceUnavaiableException {
+      emit(RegisterError("Service is not available"));
+    } on Exception {
+      emit(RegisterError("Error has occuured"));
     }
   }
 }

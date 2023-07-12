@@ -1,19 +1,16 @@
-class BadRequestException implements Exception {
-  String errormessage = 'Bad request error';
-}
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+class BadRequestException implements Exception {}
 
-class UnauthorizedException implements Exception {
-  String errormessage = 'Unauthorized Error';
-}
+class UnauthorizedException implements Exception {}
 
-class NotFoundException implements Exception {
-  String errormessage = 'User not found';
-}
+class NotFoundException implements Exception {}
 
-class ServerErrorException implements Exception {
-  String errormessage = 'Server error';
-}
+class ServerErrorException implements Exception {}
 
-class CredentialMismatchedException implements Exception {
-  String errormessage = 'credential mismatched';
-}
+class CredentialMismatchedException implements Exception {}
+
+class ForbiddenException implements Exception {}
+
+class BadGatewayException implements Exception {}
+
+class ServiceUnavaiableException implements Exception {}
