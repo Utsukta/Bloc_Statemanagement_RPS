@@ -10,46 +10,70 @@ class HomePageRepository {
   Quicksend? quicksends;
   Transaction? transaction;
   final storetoken = const FlutterSecureStorage();
+
   Future<dynamic> homeapi() async {
-    String? accesstoken = await storetoken.read(key: 'token');
+    String? accessToken = await storetoken.read(key: 'accessToken');
+
+    String? refreshToken = await storetoken.read(key: 'refreshToken');
+    print("refreshtoken is $refreshToken");
+
+    Future<void> saveAccessToken(String accessToken) async {
+      await storetoken.write(key: 'accessToken', value: accessToken);
+      print(' refreshed access token is $accessToken');
+    }
+
     final response = await http.get(
-        Uri.parse('https://rpsremit.truestreamz.com/api/v1/home_api/'),
-        headers: {'Authorization': ' Bearer $accesstoken'});
+      Uri.parse('https://rpsremit.truestreamz.com/api/v1/home_api/'),
+      headers: {'Authorization': 'Bearer $accessToken'},
+    );
+    final responsedata = jsonDecode(response.body);
+    // print(response.statusCode);
 
     switch (response.statusCode) {
       case 200:
         var homePageModel = Homepagemodel.fromJson(jsonDecode(response.body));
         userdetails = Userdetails.fromJson(homePageModel.data
-            .firstWhere((element) => (element["type"] == "detail")));
+            .firstWhere((element) => element["type"] == "detail"));
 
         services = Services.fromJson(homePageModel.data
-            .firstWhere((element) => (element["type"] == "services")));
+            .firstWhere((element) => element["type"] == "services"));
 
         quicksends = Quicksend.fromJson(homePageModel.data
-            .firstWhere((element) => (element["type"] == "quick_send")));
+            .firstWhere((element) => element["type"] == "quick_send"));
 
         transaction = Transaction.fromJson(homePageModel.data
-            .firstWhere((element) => (element["type"] == "transaction")));
+            .firstWhere((element) => element["type"] == "transaction"));
 
         return homePageModel;
-      case 400:
-        throw BadRequestException();
+
       case 401:
-        throw UnauthorizedException();
-      case 403:
-        throw ForbiddenException();
-      case 404:
-        throw NotFoundException();
-      case 422:
-        throw CredentialMismatchedException();
-      case 500:
-        throw ServerErrorException();
-      case 502:
-        throw BadGatewayException();
-      case 503:
-        throw ServiceUnavaiableException();
+        final newAccessToken = await refreshAccessToken(refreshToken!);
+        if (newAccessToken != null) {
+          accessToken = newAccessToken;
+          await saveAccessToken(accessToken);
+          print('new access token is $accessToken');
+          return await homeapi();
+        } else {
+          throw responsedata["error"];
+        }
+
       default:
-        throw Exception();
+        throw Defaultexception(error: responsedata["error"]);
     }
   }
+
+  // ignore: body_might_complete_normally_nullable
+  Future<String?> refreshAccessToken(String refreshToken) async {
+    final response = await http.post(
+      Uri.parse('https://rpsremit.truestreamz.com/api/token/refresh/'),
+      body: {'refresh': refreshToken},
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      return responseData['access'];
+    } else {}
+  }
 }
+
+ // return homeapi();

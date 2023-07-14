@@ -27,26 +27,12 @@ class HomepageBloc extends Bloc<HomepageEvent, HomepageState> {
 
       emit(HomepageSuccess(
           response, userdetails!, services!, quicksend!, transaction!));
-    } on CredentialMismatchedException {
-      emit(HomepageError("Credential Mismatched"));
     } on SocketException {
       emit(HomepageError("No Internet Connection"));
-    } on BadRequestException {
-      emit(HomepageError("Bad Request"));
-    } on UnauthorizedException {
-      emit(HomepageError("Authentication is required"));
-    } on ForbiddenException {
-      emit(HomepageError("Dorbidden"));
-    } on NotFoundException {
-      emit(HomepageError("Not Found"));
-    } on ServerErrorException {
-      emit(HomepageError("Cannot handle the request"));
-    } on BadGatewayException {
-      emit(HomepageError("Bad Gateway"));
-    } on ServiceUnavaiableException {
-      emit(HomepageError("Service is not available"));
-    } on Exception {
-      emit(HomepageError("Error has occuured"));
+    } on Defaultexception catch (e) {
+      emit(HomepageError(" hompageerror is ${e.error}"));
+    } catch (e) {
+      emit(HomepageError(e.toString()));
     }
   }
 }

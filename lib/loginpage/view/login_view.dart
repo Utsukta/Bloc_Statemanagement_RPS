@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rpsbloc/homepage/view/homepage_view.dart';
 import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
-
+import 'package:rpsbloc/registerpage/view/register_view.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +19,7 @@ class _LoginPageViewState extends State<LoginPageView> {
 
   final formKey = GlobalKey<FormState>();
 
-  final loginBloc = LoginBloc();
+  // final loginBloc = LoginBloc();
   bool isEmailValueChanged = false;
   bool isPasswordValueChanged = false;
   @override
@@ -125,11 +125,10 @@ class _LoginPageViewState extends State<LoginPageView> {
 
                             ///test
                             BlocConsumer<LoginBloc, LoginState>(
-                              bloc: loginBloc,
                               listener: (context, state) {
                                 if (state is LoginSuccessState) {
                                   {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
@@ -146,6 +145,7 @@ class _LoginPageViewState extends State<LoginPageView> {
                                 }
                               },
                               builder: (context, state) {
+                                final loginBloc = context.read<LoginBloc>();
                                 if (state is LoginInitial) {
                                   if (isPasswordValueChanged == true &&
                                       isEmailValueChanged == true) {
@@ -157,8 +157,9 @@ class _LoginPageViewState extends State<LoginPageView> {
                                               .validate()) {
                                             loginBloc.add(
                                                 LoginButtonCLickedEvent(
-                                                    emailController.text,
-                                                    passwordController.text));
+                                                    email: emailController.text,
+                                                    password: passwordController
+                                                        .text));
                                           }
                                         });
                                   }
@@ -188,8 +189,8 @@ class _LoginPageViewState extends State<LoginPageView> {
                                       //if error state ma enter vayo vane it checks validation before triggering event
                                       if (formKey.currentState!.validate()) {
                                         loginBloc.add(LoginButtonCLickedEvent(
-                                          emailController.text,
-                                          passwordController.text,
+                                          email: emailController.text,
+                                          password: passwordController.text,
                                         ));
                                       }
                                     },
@@ -255,7 +256,7 @@ class _LoginPageViewState extends State<LoginPageView> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const LoginPageView()));
+                                                const RegisterPageView()));
                                   },
                                   child: const Text(
                                     'Sign Up',

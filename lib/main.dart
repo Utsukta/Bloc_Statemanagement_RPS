@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rpsbloc/homepage/bloc/homepage_bloc.dart';
+import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
+import 'package:rpsbloc/registerpage/bloc/register_bloc.dart';
 import 'package:rpsbloc/splash_screen.dart';
 
 void main() {
@@ -11,8 +14,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-    
-        debugShowCheckedModeBanner: false, title: 'RPS', home: SplashScreen());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => LoginBloc(),
+        ),
+        BlocProvider(
+          create: (context) => RegisterBloc(),
+        ),
+        BlocProvider(
+          create: (context) => HomepageBloc(),
+        )
+      ],
+      child: const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'RPS',
+          home: SplashScreen()),
+    );
   }
 }

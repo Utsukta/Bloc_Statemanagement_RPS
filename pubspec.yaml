@@ -76,12 +76,19 @@ flutter:
     - assets/icons/home/nav/bars.svg
     - assets/icons/home/nav/recepient.svg
     - assets/icons/home/nav/profile.svg
+    - assets/icons/home/nav/profile_selected.svg
+    - assets/profile_selected.svg
     - assets/icons/hide.png
     - assets/icons/Japan Flag.png
     # - Images/Nepalflag.png
     - assets/icons/info.png
     - assets/icons/home/ADD.svg
     - assets/icons/home/services/more.svg
+    - assets/icons/home/profile/profileicon.svg
+    - assets/profile_test.svg
+    - assets/icons/Group.png
+    - assets/icons/info.png
+    
    
 
   # An image asset can refer to one or more resolution-specific "variants", see

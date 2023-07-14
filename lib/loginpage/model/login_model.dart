@@ -3,11 +3,13 @@ class Loginmodel {
   final String email;
   final String password;
   final String deviceId;
+  
 
   Loginmodel({
     required this.email,
     required this.password,
     required this.deviceId,
+  
   });
 
   factory Loginmodel.fromJson(Map<String, dynamic> json) {
@@ -15,6 +17,7 @@ class Loginmodel {
       email: json["email"],
       password: json["password"],
       deviceId: json["device_id"],
+      
     );
   }
 
@@ -23,6 +26,7 @@ class Loginmodel {
       'email': email,
       'password': password,
       'device_id': deviceId,
+    
     };
   }
 }

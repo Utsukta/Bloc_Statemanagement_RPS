@@ -84,10 +84,13 @@ class _HomePageViewState extends State<HomePageView> {
                   ),
                   label: ''),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset('assets/icons/home/nav/profile.svg',
-                      colorFilter: ColorFilter.mode(
-                          selectedIndex == 3 ? Colors.blue : Colors.grey,
-                          BlendMode.srcATop)),
+                  icon: selectedIndex == 3
+                      ? SvgPicture.asset(
+                          'assets/icons/home/nav/profile_selected.svg',
+                        )
+                      : SvgPicture.asset(
+                          'assets/icons/home/nav/profile.svg',
+                        ),
                   label: ''),
             ],
           ),

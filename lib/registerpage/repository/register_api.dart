@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:rpsbloc/error/exceptions.dart';
@@ -31,28 +32,21 @@ class RegisterRepository {
     final response = await http.post(
         Uri.parse('https://rpsremit.truestreamz.com/api/v1/register'),
         body: registermodel.toJson());
+    final responsedata = jsonDecode(response.body);
 
     switch (response.statusCode) {
       case 200:
         return response;
+
+      //changed
       case 400:
-        throw BadRequestException();
-      case 401:
-        throw UnauthorizedException();
-      case 403:
-        throw ForbiddenException();
-      case 404:
-        throw NotFoundException();
+        throw BadRequestException(error: responsedata["error"]);
+
       case 422:
-        throw CredentialMismatchedException();
-      case 500:
-        throw ServerErrorException();
-      case 502:
-        throw BadGatewayException();
-      case 503:
-        throw ServiceUnavaiableException();
+        throw UnprocessableEntity(error: responsedata["error"]);
+
       default:
-        throw Exception();
+        throw Defaultexception(error: responsedata["error"]);
     }
   }
 }

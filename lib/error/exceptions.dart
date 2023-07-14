@@ -1,16 +1,27 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-class BadRequestException implements Exception {}
+//already registerde and tried to register again
+class BadRequestException implements Exception {
+  String error;
+  BadRequestException({
+    required this.error,
+  });
+}
 
-class UnauthorizedException implements Exception {}
+// class UnauthorizedException implements Exception {}
 
-class NotFoundException implements Exception {}
+// class NotFoundException implements Exception {}
 
-class ServerErrorException implements Exception {}
+//mismatched
+class UnprocessableEntity implements Exception {
+  String error;
+  UnprocessableEntity({
+    required this.error,
+  });
+}
 
-class CredentialMismatchedException implements Exception {}
-
-class ForbiddenException implements Exception {}
-
-class BadGatewayException implements Exception {}
-
-class ServiceUnavaiableException implements Exception {}
+class Defaultexception implements Exception {
+  String error;
+  Defaultexception({
+    required this.error,
+  });
+}

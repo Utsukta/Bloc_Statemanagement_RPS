@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'package:rpsbloc/error/exceptions.dart';
-import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
 import 'package:rpsbloc/loginpage/model/login_model.dart';
 import '../view/login_view.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -13,7 +11,10 @@ class LoginRepository {
   final loginview = const LoginPageView();
   final storetoken = const FlutterSecureStorage();
 
-  Future loginapi(String email, String password) async {
+  Future loginapi(
+    String email,
+    String password,
+  ) async {
     // try {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     late String deviceid;
@@ -38,30 +39,23 @@ class LoginRepository {
         Uri.parse('https://rpsremit.truestreamz.com/api/v1/login/'),
         body: loginmodel.toJson());
 
+    var responsedata = jsonDecode(response.body);
+
     switch (response.statusCode) {
       case 200:
-        var responsedata = jsonDecode(response.body);
-        var accesstoken = responsedata['data']['access_token'];
-        await storetoken.write(key: 'token', value: accesstoken);
+        var accessToken = responsedata['data']['access_token'];
+        print('loginpage $accessToken');
+        var refreshToken = responsedata["data"]["refresh_token"];
+        await storetoken.write(key: 'refreshToken', value: refreshToken);
+        await storetoken.write(key: 'accessToken', value: accessToken);
         return response;
-      case 400:
-        throw BadRequestException();
-      case 401:
-        throw UnauthorizedException();
-      case 403:
-        throw ForbiddenException();
-      case 404:
-        throw NotFoundException();
+
       case 422:
-        throw CredentialMismatchedException();
-      case 500:
-        throw ServerErrorException();
-      case 502:
-        throw BadGatewayException();
-      case 503:
-        throw ServiceUnavaiableException();
+        throw responsedata["error"];
+      // throw UnprocessableEntity(error: responsedata["error"]);
+
       default:
-        throw Exception();
+        throw Defaultexception(error: responsedata["error"]);
     }
   }
 }

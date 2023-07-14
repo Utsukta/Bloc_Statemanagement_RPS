@@ -187,7 +187,7 @@ class _RegisterPageViewState extends State<RegisterPageView> {
                               bloc: registerbloc,
                               listener: (context, state) {
                                 if (state is RegisterSuccess) {
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
