@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rpsbloc/homepage/bloc/homepage_bloc.dart';
+import 'package:rpsbloc/homepage/home/bloc/homepage_bloc.dart';
 import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
 import 'package:rpsbloc/registerpage/bloc/register_bloc.dart';
 import 'package:rpsbloc/splash_screen.dart';

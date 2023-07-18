@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rpsbloc/homepage/view/homepage_view.dart';
+import 'package:rpsbloc/homepage/home/view/homepage_view.dart';
 import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
 import 'package:rpsbloc/registerpage/view/register_view.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';

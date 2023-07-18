@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rpsbloc/error/exceptions.dart';
-import 'package:rpsbloc/homepage/model/homepage_model.dart';
+import 'package:rpsbloc/homepage/home/model/homepage_model.dart';
 
 class HomePageRepository {
   Userdetails? userdetails;
@@ -43,8 +43,9 @@ class HomePageRepository {
 
         transaction = Transaction.fromJson(homePageModel.data
             .firstWhere((element) => element["type"] == "transaction"));
+        break;
 
-        return homePageModel;
+      // return homePageModel;
 
       case 401:
         final newAccessToken = await refreshAccessToken(refreshToken!);
@@ -53,9 +54,8 @@ class HomePageRepository {
           await saveAccessToken(accessToken);
           print('new access token is $accessToken');
           return await homeapi();
-        } else {
-          throw responsedata["error"];
         }
+        break;
 
       default:
         throw Defaultexception(error: responsedata["error"]);
@@ -72,8 +72,8 @@ class HomePageRepository {
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
       return responseData['access'];
-    } else {}
+    } else if (response.statusCode == 401) {
+      throw RefreshTokenExpired();
+    }
   }
 }
-
- // return homeapi();

@@ -9,13 +9,11 @@ class HomepageInitial extends HomepageState {}
 class HomepageLoading extends HomepageState {}
 
 class HomepageSuccess extends HomepageState {
-  final Homepagemodel homepagemodel;
   final Userdetails userdetails;
   final Services services;
   final Quicksend quicksend;
   final Transaction transaction;
   HomepageSuccess(
-    this.homepagemodel,
     this.userdetails,
     this.services,
     this.quicksend,
@@ -28,3 +26,5 @@ class HomepageError extends HomepageState {
 
   HomepageError(this.message);
 }
+
+class RefreshTokenExpiredState extends HomepageState {}

@@ -45,6 +45,7 @@ class _RegisterPageViewState extends State<RegisterPageView> {
                     child: IconButton(
                       onPressed: () {
                         Navigator.pop(context);
+                        // Navigator.popUntil(context, (route) => false);
                       },
                       icon: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 5),

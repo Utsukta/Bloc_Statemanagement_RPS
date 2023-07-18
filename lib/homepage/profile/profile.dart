@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rpsbloc/homepage/home/view/homepage_view.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rpsbloc/homepage/repository/homepage_api.dart';
+import 'package:rpsbloc/loginpage/view/login_view.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -9,6 +13,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final hompagerepository = HomePageRepository();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -247,7 +252,9 @@ Future showDialogBox(BuildContext context) {
                                   borderRadius: BorderRadius.circular(50)),
                               backgroundColor:
                                   const Color.fromARGB(255, 8, 75, 129)),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           child: const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 13),
@@ -258,7 +265,16 @@ Future showDialogBox(BuildContext context) {
                           ),
                         ),
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            // homepagerepository.homeapi().accessToken.
+                            // await storage.delete(key: 'accessToken');
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const LoginPageView()),
+                                (route) => false);
+                          },
                           style: OutlinedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50)),

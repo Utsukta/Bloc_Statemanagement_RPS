@@ -23,8 +23,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         event.password,
       );
       emit(LoginSuccessState());
-      // } on UnprocessableEntity catch (e) {
-      //   emit(LoginErrorState(e.error));
+    } on UnprocessableEntity catch (e) {
+      emit(LoginErrorState(e.error));
     } on SocketException {
       emit(LoginErrorState("No Internet Connection"));
     } on Defaultexception catch (e) {
@@ -34,3 +34,4 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 }
+

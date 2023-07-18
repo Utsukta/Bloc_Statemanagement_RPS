@@ -51,8 +51,9 @@ class LoginRepository {
         return response;
 
       case 422:
-        throw responsedata["error"];
-      // throw UnprocessableEntity(error: responsedata["error"]);
+        throw UnprocessableEntity(error: responsedata["error"]);
+
+    
 
       default:
         throw Defaultexception(error: responsedata["error"]);
