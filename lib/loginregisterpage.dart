@@ -173,10 +173,11 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                     CustomButtonwithlabel(
                       label: 'Sign In',
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPageView()));
+                        Navigator.pushNamed(context, '/login');
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const LoginPageView()));
                       },
                       color: Colors.white,
                       textstyle:

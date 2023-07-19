@@ -16,3 +16,6 @@ class LoginErrorState extends LoginState {
   // @override
   // String toString() => message;
 }
+
+class LogoutSuccessState extends LoginState{}
+

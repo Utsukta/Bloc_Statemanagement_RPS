@@ -15,16 +15,16 @@ class HomePageRepository {
     String? accessToken = await storetoken.read(key: 'accessToken');
 
     String? refreshToken = await storetoken.read(key: 'refreshToken');
-    print("refreshtoken is $refreshToken");
+    // print("refreshtoken is $refreshToken");
 
     Future<void> saveAccessToken(String accessToken) async {
       await storetoken.write(key: 'accessToken', value: accessToken);
-      print(' refreshed access token is $accessToken');
+      // print(' refreshed access token is $accessToken');
     }
 
     final response = await http.get(
       Uri.parse('https://rpsremit.truestreamz.com/api/v1/home_api/'),
-      headers: {'Authorization': 'Bearer $accessToken'},
+      headers: {'Authorization': 'Bearer $accessToken??'},
     );
     final responsedata = jsonDecode(response.body);
     // print(response.statusCode);
@@ -75,5 +75,9 @@ class HomePageRepository {
     } else if (response.statusCode == 401) {
       throw RefreshTokenExpired();
     }
+  }
+
+  Future logoutAccessTokenDelete() async {
+    await storetoken.delete(key: 'accessToken');
   }
 }

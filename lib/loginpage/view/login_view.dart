@@ -14,14 +14,11 @@ class LoginPageView extends StatefulWidget {
 
 class _LoginPageViewState extends State<LoginPageView> {
   TextEditingController passwordController = TextEditingController();
-
   TextEditingController emailController = TextEditingController();
-
   final formKey = GlobalKey<FormState>();
-
-  // final loginBloc = LoginBloc();
   bool isEmailValueChanged = false;
   bool isPasswordValueChanged = false;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -128,11 +125,11 @@ class _LoginPageViewState extends State<LoginPageView> {
                               listener: (context, state) {
                                 if (state is LoginSuccessState) {
                                   {
-                                    Navigator.pushReplacement(
-                                        context,
+                                    Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const HomePageView()));
+                                                const HomePageView()),
+                                        (route) => false);
                                   }
                                 }
 
@@ -145,7 +142,9 @@ class _LoginPageViewState extends State<LoginPageView> {
                                 }
                               },
                               builder: (context, state) {
-                                final loginBloc = context.read<LoginBloc>();
+                                // final loginBloc = context.read<LoginBloc>();
+                                final loginBloc =
+                                    BlocProvider.of<LoginBloc>(context);
                                 if (state is LoginInitial) {
                                   if (isPasswordValueChanged == true &&
                                       isEmailValueChanged == true) {
@@ -199,6 +198,19 @@ class _LoginPageViewState extends State<LoginPageView> {
                                 if (state is LoginSuccessState) {
                                   return CustomButtonwithlabel(
                                       label: 'Log In', onPressed: () {});
+                                }
+
+                                if (state is LogoutSuccessState) {
+                                  return CustomButtonwithlabel(
+                                      label: 'Login',
+                                      onPressed: () {
+                                        if (formKey.currentState!.validate()) {
+                                          loginBloc.add(LoginButtonCLickedEvent(
+                                            email: emailController.text,
+                                            password: passwordController.text,
+                                          ));
+                                        }
+                                      });
                                 }
 
                                 return CustomButtonwithlabel(

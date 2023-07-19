@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rpsbloc/homepage/home/bloc/homepage_bloc.dart';
+import 'package:rpsbloc/homepage/home/view/homepage_view.dart';
+import 'package:rpsbloc/homepage/profile/bloc/profile_bloc.dart';
 import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
+import 'package:rpsbloc/loginpage/view/login_view.dart';
+import 'package:rpsbloc/loginregisterpage.dart';
 import 'package:rpsbloc/registerpage/bloc/register_bloc.dart';
+import 'package:rpsbloc/registerpage/view/register_view.dart';
 import 'package:rpsbloc/splash_screen.dart';
 
 void main() {
@@ -24,12 +29,21 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => HomepageBloc(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => ProfileBloc(),
+        ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+          routes: {
+            '/loginregisterpage': (context) => const LoginRegisterPage(),
+            '/login': (context) => const LoginPageView(),
+            '/register': (context) => const RegisterPageView(),
+            '/homepage': (context) => const HomePageView(),
+          },
           debugShowCheckedModeBanner: false,
           title: 'RPS',
-          home: SplashScreen()),
+          home: const SplashScreen()),
     );
   }
 }

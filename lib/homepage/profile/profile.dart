@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rpsbloc/homepage/home/view/homepage_view.dart';
+import 'package:rpsbloc/homepage/profile/bloc/profile_bloc.dart';
+import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rpsbloc/homepage/repository/homepage_api.dart';
-import 'package:rpsbloc/loginpage/view/login_view.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -13,7 +13,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final hompagerepository = HomePageRepository();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -210,6 +209,7 @@ class _ProfileState extends State<Profile> {
 }
 
 Future showDialogBox(BuildContext context) {
+  final loginBloc = context.read<LoginBloc>();
   return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -264,27 +264,32 @@ Future showDialogBox(BuildContext context) {
                             ),
                           ),
                         ),
-                        OutlinedButton(
-                          onPressed: () {
-                            // homepagerepository.homeapi().accessToken.
-                            // await storage.delete(key: 'accessToken');
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const LoginPageView()),
-                                (route) => false);
+                        BlocListener<ProfileBloc, ProfileState>(
+                          listener: (context, state) {
+                            if (state is ExitbuttonClickedState) {
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, '/login', (route) => false);
+                              loginBloc.add(LogoutSuccessEvent());
+                            }
                           },
-                          style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50)),
-                              backgroundColor: Colors.green),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 40, vertical: 13),
-                            child: Text(
-                              "Exit",
-                              style: TextStyle(color: Colors.white),
+                          child: OutlinedButton(
+                            onPressed: () {
+                              BlocProvider.of<ProfileBloc>(context)
+                                  .add(ExitbuttonClickedEvent());
+
+                              homepagerepository.logoutAccessTokenDelete();
+                            },
+                            style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50)),
+                                backgroundColor: Colors.green),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 13),
+                              child: Text(
+                                "Exit",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                         ),

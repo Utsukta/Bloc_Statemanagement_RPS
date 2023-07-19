@@ -11,6 +11,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   LoginBloc() : super(LoginInitial()) {
     on<LoginButtonCLickedEvent>(loginButtonCLickedEvent);
+    on<LogoutSuccessEvent>(logoutSuccessEvent);
   }
 
   FutureOr<void> loginButtonCLickedEvent(
@@ -33,5 +34,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(LoginErrorState(e.toString()));
     }
   }
-}
 
+  FutureOr<void> logoutSuccessEvent(
+      LogoutSuccessEvent event, Emitter<LoginState> emit) {
+    emit(LogoutSuccessState());
+  }
+}

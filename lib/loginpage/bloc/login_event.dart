@@ -10,3 +10,5 @@ class LoginButtonCLickedEvent extends LoginEvent {
   LoginButtonCLickedEvent(
       {required this.email, required this.password, this.error});
 }
+
+class LogoutSuccessEvent extends LoginEvent {}

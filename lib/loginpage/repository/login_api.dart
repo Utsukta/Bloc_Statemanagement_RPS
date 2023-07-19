@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:rpsbloc/error/exceptions.dart';
 import 'package:rpsbloc/loginpage/model/login_model.dart';
-import '../view/login_view.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginRepository {
-  final loginview = const LoginPageView();
   final storetoken = const FlutterSecureStorage();
 
   Future loginapi(
@@ -52,8 +50,6 @@ class LoginRepository {
 
       case 422:
         throw UnprocessableEntity(error: responsedata["error"]);
-
-    
 
       default:
         throw Defaultexception(error: responsedata["error"]);

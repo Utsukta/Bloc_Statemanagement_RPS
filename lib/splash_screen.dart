@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:rpsbloc/loginregisterpage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,8 +17,10 @@ class _SplashScreenState extends State<SplashScreen> {
       //     context,
       //     MaterialPageRoute(builder: (context) => const LoginRegisterPage()),
       //     (route) => false);
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const LoginRegisterPage()));
+      // Navigator.pushReplacement(context,
+      //     MaterialPageRoute(builder: (context) => const LoginRegisterPage()));
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/loginregisterpage', (route) => false);
     });
   }
 
