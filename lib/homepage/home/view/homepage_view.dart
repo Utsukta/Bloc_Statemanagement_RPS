@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rpsbloc/homepage/barpage.dart/barpage.dart';
 import 'package:rpsbloc/homepage/home/bloc/homepage_bloc.dart';
 import 'package:rpsbloc/homepage/home/model/homepage_model.dart';
-import 'package:rpsbloc/homepage/repository/homepage_api.dart';
 import 'package:rpsbloc/homepage/profile/profile.dart';
 import 'package:rpsbloc/loginpage/view/login_view.dart';
 import 'package:rpsbloc/recepient.dart';
@@ -108,7 +107,6 @@ class HomepageWidget extends StatefulWidget {
   State<HomepageWidget> createState() => _HomepageWidgetState();
 }
 
-final homepagerepository = HomePageRepository();
 final homepagebloc = HomepageBloc();
 
 class _HomepageWidgetState extends State<HomepageWidget> {
@@ -117,6 +115,7 @@ class _HomepageWidgetState extends State<HomepageWidget> {
   bool isAllSelected = true;
   bool isSentSelected = false;
   bool isTopupSelected = false;
+  bool isConversionAmountChanged = false;
 
   List<TransactionList> currentTransactionList = [];
 
@@ -312,7 +311,7 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                                   color: Color.fromARGB(255, 255, 255, 255),
                                   offset: Offset(1, 0)),
                             ],
-                            color: Colors.white,
+                            color: const Color.fromARGB(255, 250, 249, 249),
                             borderRadius: BorderRadius.circular(15)),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -333,6 +332,7 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                                   height: 10,
                                 ),
                                 CustomContainerWithInputField(
+                                  readonly: false,
                                   decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       hintText: 'Conversion amount',
@@ -341,6 +341,11 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                                   label: 'JPY',
                                   name: 'You send',
                                   controller: amountcontroller,
+                                  onchanged: (value) {
+                                    setState(() {
+                                      isConversionAmountChanged = true;
+                                    });
+                                  },
                                 ),
                                 const SizedBox(
                                   height: 5,
@@ -348,16 +353,28 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                CustomContainerWithInputField(
-                                  decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      hintStyle: TextStyle(fontSize: 10)),
-                                  image: 'assets/icons/Japan Flag.png',
-                                  label: 'NPR',
-                                  icon: Icons.arrow_drop_down_outlined,
-                                  name: 'Recipient gets',
-                                  enable: false,
-                                ),
+                                isConversionAmountChanged == false
+                                    ? CustomContainerWithInputField(
+                                        readonly: true,
+                                        decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintStyle: TextStyle(fontSize: 10)),
+                                        image: 'assets/icons/Japan Flag.png',
+                                        label: 'NPR',
+                                        icon: Icons.arrow_drop_down_outlined,
+                                        name: 'Recipient gets',
+                                        border: Border.all(color: Colors.white),
+                                      )
+                                    : CustomContainerWithInputField(
+                                        readonly: true,
+                                        decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintStyle: TextStyle(fontSize: 10)),
+                                        image: 'assets/icons/Japan Flag.png',
+                                        label: 'NPR',
+                                        icon: Icons.arrow_drop_down_outlined,
+                                        name: 'Recipient gets',
+                                      ),
                                 const SizedBox(height: 10),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

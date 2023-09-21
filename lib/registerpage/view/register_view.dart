@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rpsbloc/emailverification_page/view/emailverification_view.dart';
 import 'package:rpsbloc/loginpage/view/login_view.dart';
 import 'package:rpsbloc/registerpage/bloc/register_bloc.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
+import 'package:rpsbloc/test/bloc/ui.dart';
 
 class RegisterPageView extends StatefulWidget {
   const RegisterPageView({super.key});
@@ -34,29 +36,15 @@ class _RegisterPageViewState extends State<RegisterPageView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 10),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: const Color.fromARGB(255, 189, 188, 188)),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        // Navigator.popUntil(context, (route) => false);
-                      },
-                      icon: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          size: 20,
-                          color: Color.fromARGB(255, 87, 86, 86),
-                        ),
+                  GestureDetector(
+                      child: Image.asset(
+                        'assets/icons/back_arrow.png',
+                        height: 40,
+                        width: 40,
                       ),
-                    ),
-                  ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      }),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
@@ -191,8 +179,10 @@ class _RegisterPageViewState extends State<RegisterPageView> {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
+                                          settings: RouteSettings(
+                                              arguments: emailController.text),
                                           builder: (context) =>
-                                              const LoginPageView()));
+                                              const EmailVerificationView()));
                                 } else if (state is RegisterError) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(state.message)));
@@ -239,7 +229,7 @@ class _RegisterPageViewState extends State<RegisterPageView> {
                                   );
                                 } else if (state is RegisterError) {
                                   return CustomButtonwithlabel(
-                                    label: 'Login',
+                                    label: 'Register',
                                     onPressed: () {
                                       //if error state ma enter vayo vane it checks validation before triggering event
                                       if (formKey.currentState!.validate()) {

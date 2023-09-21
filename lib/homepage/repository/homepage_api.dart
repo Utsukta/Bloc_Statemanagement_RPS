@@ -52,7 +52,6 @@ class HomePageRepository {
         if (newAccessToken != null) {
           accessToken = newAccessToken;
           await saveAccessToken(accessToken);
-          print('new access token is $accessToken');
           return await homeapi();
         }
         break;

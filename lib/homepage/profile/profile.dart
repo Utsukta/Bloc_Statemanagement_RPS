@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rpsbloc/homepage/home/view/homepage_view.dart';
 import 'package:rpsbloc/homepage/profile/bloc/profile_bloc.dart';
+import 'package:rpsbloc/homepage/repository/homepage_api.dart';
 import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,6 +11,8 @@ class Profile extends StatefulWidget {
   @override
   State<Profile> createState() => _ProfileState();
 }
+
+final homepagerepository = HomePageRepository();
 
 class _ProfileState extends State<Profile> {
   @override

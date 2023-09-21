@@ -4,8 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:rpsbloc/error/exceptions.dart';
 import 'package:rpsbloc/registerpage/model/register_model.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class RegisterRepository {
+  final storetoken = const FlutterSecureStorage();
   Future registerapi(
       String email, String password, String confirmpassword) async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -36,6 +38,11 @@ class RegisterRepository {
 
     switch (response.statusCode) {
       case 200:
+        var accessToken = responsedata['data']['access_token'];
+        var refreshToken = responsedata["data"]["refresh_token"];
+        await storetoken.write(key: 'refreshToken', value: refreshToken);
+        await storetoken.write(key: 'accessToken', value: accessToken);
+
         return response;
 
       //changed
@@ -44,6 +51,8 @@ class RegisterRepository {
 
       case 422:
         throw UnprocessableEntity(error: responsedata["error"]);
+
+      case 500:
 
       default:
         throw Defaultexception(error: responsedata["error"]);

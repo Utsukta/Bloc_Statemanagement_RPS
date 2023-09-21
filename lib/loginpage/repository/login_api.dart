@@ -42,7 +42,6 @@ class LoginRepository {
     switch (response.statusCode) {
       case 200:
         var accessToken = responsedata['data']['access_token'];
-        print('loginpage $accessToken');
         var refreshToken = responsedata["data"]["refresh_token"];
         await storetoken.write(key: 'refreshToken', value: refreshToken);
         await storetoken.write(key: 'accessToken', value: accessToken);

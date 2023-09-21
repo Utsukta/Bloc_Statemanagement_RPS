@@ -22,4 +22,11 @@ class Defaultexception implements Exception {
   });
 }
 
+class ServerErrorException implements Exception {
+  String error;
+  ServerErrorException({
+    required this.error,
+  });
+}
+
 class RefreshTokenExpired implements Exception {}

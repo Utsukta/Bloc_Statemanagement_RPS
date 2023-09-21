@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 
 // ignore: must_be_immutable
 class CustomInputFieldwithlabel extends StatefulWidget {
@@ -93,7 +95,7 @@ class CustomButtonwithlabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 55,
+      height: 60,
       width: MediaQuery.of(context).size.width,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
@@ -209,8 +211,11 @@ class CustomContainerWithInputField extends StatelessWidget {
   final String name;
   final InputDecoration decoration;
   final String image;
-  bool? enable;
   final IconData? icon;
+  final Function(String)? onchanged;
+  final BoxBorder? border;
+  bool readonly;
+  int? maxlength;
 
   CustomContainerWithInputField(
       {required this.decoration,
@@ -219,7 +224,10 @@ class CustomContainerWithInputField extends StatelessWidget {
       required this.label,
       this.controller,
       this.icon,
-      this.enable,
+      this.onchanged,
+      this.border,
+      required this.readonly,
+      this.maxlength,
       super.key});
 
   @override
@@ -230,7 +238,7 @@ class CustomContainerWithInputField extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(5),
-            border:
+            border: border ??
                 Border.all(color: const Color.fromARGB(255, 200, 198, 198))),
         child: Padding(
           padding: const EdgeInsets.only(
@@ -262,13 +270,17 @@ class CustomContainerWithInputField extends StatelessWidget {
                       style: const TextStyle(fontSize: 10),
                     ),
                     SizedBox(
-                      width: 150,
+                      width: 170,
                       height: 20,
                       child: TextField(
+                        keyboardType: TextInputType.number,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        readOnly: readonly,
                         inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
+                          ThousandsFormatter(),
+                          LengthLimitingTextInputFormatter(maxlength),
                         ],
-                        enabled: enable,
+                        onChanged: onchanged,
                         maxLines: 1,
                         textAlign: TextAlign.end,
                         decoration: decoration,
@@ -284,35 +296,85 @@ class CustomContainerWithInputField extends StatelessWidget {
   }
 }
 
-class CustomOTPConatiner extends StatefulWidget {
-  const CustomOTPConatiner({super.key});
+class CustomEmailVerification extends StatefulWidget {
+  final VoidCallback onTap;
+  const CustomEmailVerification({super.key, required this.onTap});
 
   @override
-  State<CustomOTPConatiner> createState() => _CustomOTPConatinerState();
+  State<CustomEmailVerification> createState() =>
+      _CustomEmailVerificationState();
 }
 
-class _CustomOTPConatinerState extends State<CustomOTPConatiner> {
-  TextEditingController otpController = TextEditingController();
-
+class _CustomEmailVerificationState extends State<CustomEmailVerification> {
+  bool enableResend = false;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      width: 40,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.grey)),
-      child: TextField(
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        controller: otpController,
-        autofocus: true,
-        textAlign: TextAlign.center,
-        maxLength: 1,
-        decoration: const InputDecoration(
-          counterText: '',
-          border: InputBorder.none,
+    return Column(
+      children: [
+        SizedBox(
+          height: 55,
+          width: MediaQuery.of(context).size.width,
+          child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                backgroundColor: const Color.fromARGB(255, 13, 102, 174),
+              ),
+              onPressed: () {},
+              child: const CircularProgressIndicator()),
         ),
-      ),
+        const SizedBox(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            enableResend == false
+                ? const Text(
+                    'Send code again in:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  )
+                : const Text(
+                    'Didnot recevie the code?',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+            const SizedBox(
+              width: 5,
+            ),
+            enableResend == false
+                ? TimerCountdown(
+                    spacerWidth: 0,
+                    enableDescriptions: false,
+                    format: CountDownTimerFormat.minutesSeconds,
+                    endTime: DateTime.now()
+                        .add(const Duration(minutes: 1, seconds: 60)),
+                    onEnd: () {
+                      setState(() {
+                        enableResend = true;
+                      });
+                    },
+                  )
+                : const SizedBox(),
+            enableResend == true
+                ? GestureDetector(
+                    onTap: () {
+                      widget.onTap;
+                    },
+                    child: const Text(
+                      'Resend Code',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 8, 90, 156),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    ))
+                : const SizedBox()
+          ],
+        )
+      ],
     );
   }
 }
