@@ -10,7 +10,7 @@ class CustomInputFieldwithlabel extends StatefulWidget {
   final String label; //label text
   final FormFieldValidator<String> validator;
   final TextEditingController controller;
-  // final  ValueChanged<String> onchanged;
+
   final Function(String) onchanged;
   bool isPassword;
 
@@ -296,85 +296,63 @@ class CustomContainerWithInputField extends StatelessWidget {
   }
 }
 
-class CustomEmailVerification extends StatefulWidget {
-  final VoidCallback onTap;
-  const CustomEmailVerification({super.key, required this.onTap});
+class CustomAlertBox extends StatefulWidget {
+  final IconData icon;
+  final String label;
+  final String text;
+  final Function onPressed;
+  final Color color;
+  const CustomAlertBox(
+      {required this.icon,
+      required this.text,
+      required this.label,
+      required this.onPressed,
+      required this.color,
+      super.key});
 
   @override
-  State<CustomEmailVerification> createState() =>
-      _CustomEmailVerificationState();
+  State<CustomAlertBox> createState() => _CustomAlertBoxState();
 }
 
-class _CustomEmailVerificationState extends State<CustomEmailVerification> {
-  bool enableResend = false;
+class _CustomAlertBoxState extends State<CustomAlertBox> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 55,
-          width: MediaQuery.of(context).size.width,
-          child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                backgroundColor: const Color.fromARGB(255, 13, 102, 174),
-              ),
-              onPressed: () {},
-              child: const CircularProgressIndicator()),
-        ),
-        const SizedBox(height: 30),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            enableResend == false
-                ? const Text(
-                    'Send code again in:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  )
-                : const Text(
-                    'Didnot recevie the code?',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-            const SizedBox(
-              width: 5,
-            ),
-            enableResend == false
-                ? TimerCountdown(
-                    spacerWidth: 0,
-                    enableDescriptions: false,
-                    format: CountDownTimerFormat.minutesSeconds,
-                    endTime: DateTime.now()
-                        .add(const Duration(minutes: 1, seconds: 60)),
-                    onEnd: () {
-                      setState(() {
-                        enableResend = true;
-                      });
-                    },
-                  )
-                : const SizedBox(),
-            enableResend == true
-                ? GestureDetector(
-                    onTap: () {
-                      widget.onTap;
-                    },
-                    child: const Text(
-                      'Resend Code',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 8, 90, 156),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
-                    ))
-                : const SizedBox()
-          ],
-        )
-      ],
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      content: Builder(builder: (context) {
+        return SizedBox(
+          height: 250,
+          width: 300,
+          child: Column(
+            children: [
+              Stack(alignment: Alignment.center, children: [
+                const Icon(
+                  Icons.circle,
+                  size: 100,
+                  color: Color.fromARGB(255, 247, 233, 233),
+                ),
+                Icon(
+                  Icons.circle,
+                  size: 80,
+                  color: widget.color,
+                ),
+                Icon(
+                  widget.icon,
+                  color: Colors.white,
+                  size: 40,
+                )
+              ]),
+              const Text("Verification Failed",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+              const SizedBox(height: 15),
+              Text(widget.text),
+              const SizedBox(height: 20),
+              CustomButtonwithlabel(
+                  label: widget.label, onPressed: widget.onPressed),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

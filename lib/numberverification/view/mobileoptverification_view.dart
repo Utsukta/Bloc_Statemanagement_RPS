@@ -35,6 +35,9 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
           _secondsRemaining--;
         });
       }
+      if (!mounted) {
+        timer.cancel();
+      }
     });
   }
 
@@ -42,6 +45,12 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
   void initState() {
     super.initState();
     startTimer();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override

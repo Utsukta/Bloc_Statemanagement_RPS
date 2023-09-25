@@ -35,6 +35,9 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
           _secondsRemaining--;
         });
       }
+      if (!mounted) {
+        timer.cancel(); // Cancel the timer when the widget is not mounted
+      }
     });
   }
 
@@ -42,6 +45,12 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
   void initState() {
     super.initState();
     startTimer();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
   }
 
   @override
