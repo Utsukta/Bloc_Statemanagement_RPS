@@ -296,25 +296,27 @@ class CustomContainerWithInputField extends StatelessWidget {
   }
 }
 
-class CustomAlertBox extends StatefulWidget {
+class CustomAlertDialogBox extends StatefulWidget {
   final IconData icon;
-  final String label;
-  final String text;
+  final String buttontext;
+  final String message;
+  final String title;
   final Function onPressed;
   final Color color;
-  const CustomAlertBox(
+  const CustomAlertDialogBox(
       {required this.icon,
-      required this.text,
-      required this.label,
+      required this.message,
+      required this.buttontext,
       required this.onPressed,
+      required this.title,
       required this.color,
       super.key});
 
   @override
-  State<CustomAlertBox> createState() => _CustomAlertBoxState();
+  State<CustomAlertDialogBox> createState() => _CustomAlertDialogBoxState();
 }
 
-class _CustomAlertBoxState extends State<CustomAlertBox> {
+class _CustomAlertDialogBoxState extends State<CustomAlertDialogBox> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -342,13 +344,14 @@ class _CustomAlertBoxState extends State<CustomAlertBox> {
                   size: 40,
                 )
               ]),
-              const Text("Verification Failed",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+              Text(widget.title,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 18)),
               const SizedBox(height: 15),
-              Text(widget.text),
+              Text(widget.message),
               const SizedBox(height: 20),
               CustomButtonwithlabel(
-                  label: widget.label, onPressed: widget.onPressed),
+                  label: widget.buttontext, onPressed: widget.onPressed),
             ],
           ),
         );

@@ -139,57 +139,16 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        content: Builder(builder: (context) {
-                          return SizedBox(
-                            height: 250,
-                            width: 300,
-                            child: Column(
-                              children: [
-                                Stack(
-                                    alignment: Alignment.center,
-                                    children: const [
-                                      Icon(
-                                        Icons.circle,
-                                        size: 100,
-                                        color:
-                                            Color.fromARGB(255, 237, 247, 237),
-                                      ),
-                                      Icon(
-                                        shadows: [
-                                          Shadow(
-                                              color: Colors.grey,
-                                              blurRadius: 15)
-                                        ],
-                                        Icons.circle,
-                                        size: 80,
-                                        color: Color.fromARGB(255, 36, 164, 72),
-                                      ),
-                                      Icon(Icons.check,
-                                          color: Colors.white,
-                                          size: 40,
-                                          weight: 40)
-                                    ]),
-                                const Text("Verification Successful",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                const SizedBox(height: 15),
-                                Text(state.message),
-                                const SizedBox(height: 20),
-                                CustomButtonwithlabel(
-                                    label: "OK",
-                                    onPressed: () {
-                                      Navigator.pushReplacementNamed(
-                                          context, "/numberverificationpage");
-                                    })
-                              ],
-                            ),
-                          );
-                        }),
-                      );
+                      return CustomAlertDialogBox(
+                          icon: Icons.check,
+                          message: state.message,
+                          buttontext: "OK",
+                          title: "Verification Successful",
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, "/numberverificationpage");
+                          },
+                          color: Colors.green);
                     });
               }
               if (state is ResendMobileCodeSuccessState) {
@@ -208,52 +167,15 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        content: Builder(builder: (context) {
-                          return SizedBox(
-                            height: 250,
-                            width: 300,
-                            child: Column(
-                              children: [
-                                Stack(
-                                    alignment: Alignment.center,
-                                    children: const [
-                                      Icon(
-                                        Icons.circle,
-                                        size: 100,
-                                        color:
-                                            Color.fromARGB(255, 247, 233, 233),
-                                      ),
-                                      Icon(
-                                        Icons.circle,
-                                        size: 80,
-                                        color: Colors.red,
-                                      ),
-                                      Icon(
-                                        Icons.close,
-                                        color: Colors.white,
-                                        size: 40,
-                                      )
-                                    ]),
-                                const Text("Verification Failed",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                const SizedBox(height: 15),
-                                Text(state.error),
-                                const SizedBox(height: 20),
-                                CustomButtonwithlabel(
-                                    label: "Retry",
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    })
-                              ],
-                            ),
-                          );
-                        }),
-                      );
+                      return CustomAlertDialogBox(
+                          icon: Icons.close,
+                          message: state.error,
+                          buttontext: "Retry",
+                          title: "Verification Failed",
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          color: Colors.red);
                     });
               }
             },
@@ -271,7 +193,6 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                               mobileOtpVerification.add(
                                   MobileVerifyButtonClickedEvent(
                                       mobile.toString(), pinController.text));
-                              print(mobile);
                             },
                             color: const Color.fromARGB(255, 12, 101, 173),
                           )

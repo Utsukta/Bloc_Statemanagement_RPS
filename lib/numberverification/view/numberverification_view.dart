@@ -112,52 +112,15 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        content: Builder(builder: (context) {
-                          return SizedBox(
-                            height: 250,
-                            width: 300,
-                            child: Column(
-                              children: [
-                                Stack(
-                                    alignment: Alignment.center,
-                                    children: const [
-                                      Icon(
-                                        Icons.circle,
-                                        size: 100,
-                                        color:
-                                            Color.fromARGB(255, 247, 233, 233),
-                                      ),
-                                      Icon(
-                                        Icons.circle,
-                                        size: 80,
-                                        color: Colors.red,
-                                      ),
-                                      Icon(
-                                        Icons.close,
-                                        color: Colors.white,
-                                        size: 40,
-                                      )
-                                    ]),
-                                const Text("Verification Failed",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                const SizedBox(height: 15),
-                                Text(state.error),
-                                const SizedBox(height: 20),
-                                CustomButtonwithlabel(
-                                    label: "Retry",
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    })
-                              ],
-                            ),
-                          );
-                        }),
-                      );
+                      return CustomAlertDialogBox(
+                          icon: Icons.close,
+                          message: state.error,
+                          buttontext: "Retry",
+                          title: "Verification Failed",
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          color: Colors.red);
                     });
               }
             },
