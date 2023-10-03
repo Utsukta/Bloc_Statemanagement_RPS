@@ -56,7 +56,6 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
   @override
   Widget build(BuildContext context) {
     final mobile = ModalRoute.of(context)!.settings.arguments;
-
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -145,8 +144,7 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                           buttontext: "OK",
                           title: "Verification Successful",
                           onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, "/numberverificationpage");
+                            Navigator.pushReplacementNamed(context, "/login");
                           },
                           color: Colors.green);
                     });
@@ -182,8 +180,8 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
             builder: (context, state) {
               final mobileOtpVerification =
                   BlocProvider.of<NumberVerificationBloc>(context);
-
-              if (state is NumberVerificationInitial) {
+              if (state is NumberVerificationInitial ||
+                  state is MobileOTPVerificationErrorState) {
                 return Column(
                   children: [
                     enableResend == false
@@ -366,75 +364,6 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                   ],
                 );
               }
-
-              if (state is MobileOTPVerificationErrorState) {
-                return Column(
-                  children: [
-                    enableResend == false
-                        ? CustomButtonwithlabel(
-                            label: 'Verify',
-                            onPressed: () {
-                              mobileOtpVerification.add(
-                                  MobileVerifyButtonClickedEvent(
-                                      mobile.toString(), pinController.text));
-                            },
-                            color: const Color.fromARGB(255, 12, 101, 173),
-                          )
-                        : CustomButtonwithlabel(
-                            label: 'Verify',
-                            onPressed: () {},
-                            color: const Color.fromARGB(255, 121, 121, 123),
-                          ),
-                    const SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        enableResend == false
-                            ? const Text(
-                                'Resend OTP',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    color: Color.fromARGB(255, 19, 98, 163)),
-                              )
-                            : const Text(
-                                'Didnot recevie the code?',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        enableResend == false
-                            ? Text(formattedTime,
-                                style: const TextStyle(
-                                    color: Colors.red, fontSize: 16))
-                            : const SizedBox(),
-                        enableResend == true
-                            ? InkWell(
-                                onTap: () {
-                                  mobileOtpVerification.add(
-                                      ResendCodeButtonClicked(
-                                          mobile.toString()));
-                                  setState(() {
-                                    enableResend = false;
-                                  });
-                                },
-                                child: const Text(
-                                  'Resend Code',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 8, 90, 156),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ))
-                            : const SizedBox()
-                      ],
-                    )
-                  ],
-                );
-              }
               return CustomButtonwithlabel(
                 label: 'Verify',
                 onPressed: () {},
@@ -442,7 +371,6 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
               );
             },
           ),
-
           const SizedBox(
             height: 35,
           ),

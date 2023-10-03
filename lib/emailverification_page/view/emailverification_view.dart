@@ -178,7 +178,9 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
               final emailverificationBloc =
                   BlocProvider.of<EmailverificationBloc>(context);
 
-              if (state is EmailverificationInitial) {
+              if (state is EmailverificationInitial ||
+                  state is EmailverificationErrorState ||
+                  state is ResendCodeSuccessState) {
                 return Column(
                   children: [
                     enableResend == false
@@ -362,75 +364,6 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                 );
               }
 
-              if (state is EmailverificationErrorState) {
-                return Column(
-                  children: [
-                    enableResend == false
-                        ? CustomButtonwithlabel(
-                            label: 'Verify',
-                            onPressed: () {
-                              emailverificationBloc.add(
-                                  VerifyButtonClickedEvent(
-                                      email: email.toString(),
-                                      code: pinController.text.toString()));
-                            },
-                            color: const Color.fromARGB(255, 12, 101, 173),
-                          )
-                        : CustomButtonwithlabel(
-                            label: 'Verify',
-                            onPressed: () {},
-                            color: const Color.fromARGB(255, 121, 121, 123),
-                          ),
-                    const SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        enableResend == false
-                            ? const Text(
-                                'Resend OTP',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    color: Color.fromARGB(255, 19, 98, 163)),
-                              )
-                            : const Text(
-                                'Didnot recevie the code?',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        enableResend == false
-                            ? Text(formattedTime,
-                                style: const TextStyle(
-                                    color: Colors.red, fontSize: 16))
-                            : const SizedBox(),
-                        enableResend == true
-                            ? InkWell(
-                                onTap: () {
-                                  emailverificationBloc.add(
-                                      ResendCodeButtonClicked(
-                                          email: email.toString()));
-                                  setState(() {
-                                    enableResend = false;
-                                  });
-                                },
-                                child: const Text(
-                                  'Resend Code',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 8, 90, 156),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ))
-                            : const SizedBox()
-                      ],
-                    )
-                  ],
-                );
-              }
               return CustomButtonwithlabel(
                 label: 'Verify',
                 onPressed: () {},

@@ -22,11 +22,8 @@ class NumberVerificationRepository {
       await storetoken.write(key: 'accessToken', value: accessToken);
     }
 
-    print("Mobile number verify ${response.body}");
-
-    print(response.statusCode);
-
     var responsedata = jsonDecode(response.body);
+    
     switch (response.statusCode) {
       case 200:
         return responsedata;
@@ -39,6 +36,13 @@ class NumberVerificationRepository {
           return await numberverificationapi(mobile);
         }
         break;
+      case 400:
+        throw BadRequestException(error: responsedata["error"]);
+
+      case 422:
+        throw UnprocessableEntity(error: responsedata["error"]);
+      case 500:
+        throw ServerErrorException(error: responsedata["error"]);
 
       default:
         throw Defaultexception(error: responsedata["error"]);
@@ -58,4 +62,5 @@ Future<String?> refreshAccessToken(String refreshToken) async {
   } else if (response.statusCode == 401) {
     throw RefreshTokenExpired();
   }
+  return null;
 }

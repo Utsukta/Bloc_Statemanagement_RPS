@@ -10,10 +10,18 @@ class EmailVerificationRepository {
         Uri.parse('https://rpsremit.truestreamz.com/api/v1/emailverify'),
         body: emailverificationmodel.toJson());
     var responsedata = jsonDecode(response.body);
-    print(responsedata);
+
     switch (response.statusCode) {
       case 200:
         return responsedata;
+
+      case 400:
+        throw BadRequestException(error: responsedata["error"]);
+
+      case 422:
+        throw UnprocessableEntity(error: responsedata["error"]);
+      case 500:
+        throw ServerErrorException(error: responsedata["error"]);
 
       default:
         throw Defaultexception(error: responsedata["error"]);
@@ -29,12 +37,15 @@ class ResendCodeRepository {
         Uri.parse('https://rpsremit.truestreamz.com/api/v1/email'),
         body: resendmodel.toJson());
     var responsedata = jsonDecode(response.body);
-    print(responsedata);
 
-    print("resend code statuscode is ${response.statusCode}");
     switch (response.statusCode) {
       case 200:
         return responsedata;
+      case 400:
+        throw BadRequestException(error: responsedata["error"]);
+
+      case 422:
+        throw UnprocessableEntity(error: responsedata["error"]);
       case 500:
         throw ServerErrorException(error: responsedata["error"]);
 

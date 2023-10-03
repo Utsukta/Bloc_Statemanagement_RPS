@@ -12,8 +12,7 @@ import 'package:rpsbloc/numberverification/bloc/number_verification_bloc.dart';
 import 'package:rpsbloc/numberverification/view/numberverification_view.dart';
 import 'package:rpsbloc/registerpage/bloc/register_bloc.dart';
 import 'package:rpsbloc/registerpage/view/register_view.dart';
-import 'package:rpsbloc/test/bloc/test_bloc.dart';
-import 'package:rpsbloc/test/bloc/ui.dart';
+import 'package:rpsbloc/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,9 +46,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => NumberVerificationBloc(),
         ),
-        BlocProvider(
-          create: (context) => TestBloc(),
-        ),
       ],
       child: MaterialApp(
           routes: {
@@ -59,11 +55,10 @@ class MyApp extends StatelessWidget {
             '/homepage': (context) => const HomePageView(),
             '/numberverificationpage': (context) =>
                 const NumberVerificationPage(),
-            '/test': (context) => const test(),
           },
           debugShowCheckedModeBanner: false,
           title: 'RPS',
-          home: const RegisterPageView()),
+          home: const SplashScreen()),
     );
   }
 }

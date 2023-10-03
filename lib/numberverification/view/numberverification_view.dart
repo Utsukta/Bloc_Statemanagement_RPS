@@ -128,7 +128,8 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
               final numberverificationBloc =
                   BlocProvider.of<NumberVerificationBloc>(context);
 
-              if (state is NumberVerificationInitial) {
+              if (state is NumberVerificationInitial ||
+                  state is NumberVerificationErrorState) {
                 return CustomButtonwithlabel(
                     label: 'Send OTP',
                     onPressed: () {
@@ -152,17 +153,6 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                       onPressed: () {},
                       child: const CircularProgressIndicator()),
                 );
-              }
-
-              if (state is NumberVerificationErrorState) {
-                return CustomButtonwithlabel(
-                    label: 'Send OTP',
-                    onPressed: () {
-                      numberverificationBloc.add(SentOTPButtonCLickedEvent(
-                          numberverificationcontroller.text
-                              .replaceAll("-", "")
-                              .toString()));
-                    });
               }
 
               return CustomButtonwithlabel(label: 'Send OTP', onPressed: () {});

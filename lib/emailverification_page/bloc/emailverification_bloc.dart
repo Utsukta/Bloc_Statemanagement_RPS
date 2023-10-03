@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rpsbloc/emailverification_page/repository/emailverification_api.dart';
@@ -26,6 +27,14 @@ class EmailverificationBloc
       emit(EmailverificationSuccess(response["data"]));
     } on Defaultexception catch (e) {
       emit(EmailverificationErrorState(e.error));
+    } on SocketException {
+      emit(EmailverificationErrorState("No Internet Connection"));
+    } on ServerErrorException catch (e) {
+      emit(EmailverificationErrorState(e.error));
+    } on UnprocessableEntity catch (e) {
+      emit(EmailverificationErrorState(e.error));
+    } on BadRequestException catch (e) {
+      emit(EmailverificationErrorState(e.error));
     }
   }
 
@@ -36,9 +45,16 @@ class EmailverificationBloc
       var response = await resendCodeRepository.resendcodeapi(event.email);
 
       emit(ResendCodeSuccessState(data: response["data"]));
-      emit(EmailverificationInitial());
     } on Defaultexception catch (e) {
       emit(ResendCodeErrorState(e.error));
+    } on BadRequestException catch (e) {
+      emit(ResendCodeErrorState(e.error));
+    } on ServerErrorException catch (e) {
+      emit(ResendCodeErrorState(e.error));
+    } on UnprocessableEntity catch (e) {
+      emit(ResendCodeErrorState(e.error));
+    } on SocketException {
+      emit(ResendCodeErrorState("No Internet Connection"));
     }
   }
 }

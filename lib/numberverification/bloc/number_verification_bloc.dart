@@ -1,12 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rpsbloc/error/exceptions.dart';
 import 'package:rpsbloc/numberverification/repository/numberverification_api.dart';
 import 'package:rpsbloc/numberverification/repository/resendcode_api.dart';
-
 import '../repository/mobileotpverification_api.dart';
-
 part 'number_verification_event.dart';
 part 'number_verification_state.dart';
 
@@ -26,16 +25,22 @@ class NumberVerificationBloc
   FutureOr<void> sentOTPButtonCLickedEvent(SentOTPButtonCLickedEvent event,
       Emitter<NumberVerificationState> emit) async {
     emit(NumberVerificationLoadingState());
-    print("here");
 
     try {
       var response = await numberVerificationRepository
           .numberverificationapi(event.mobile);
-      print("${response["data"]["code"]}");
       emit(NumberVerificationSuccess(response["data"]["code"]));
       emit(NumberVerificationInitial());
     } on Defaultexception catch (e) {
       emit(NumberVerificationErrorState(e.error));
+    } on BadRequestException catch (e) {
+      emit(NumberVerificationErrorState(e.error));
+    } on ServerErrorException catch (e) {
+      emit(NumberVerificationErrorState(e.error));
+    } on UnprocessableEntity catch (e) {
+      emit(NumberVerificationErrorState(e.error));
+    } on SocketException {
+      emit(NumberVerificationErrorState("No Internet Connection"));
     }
   }
 
@@ -49,6 +54,14 @@ class NumberVerificationBloc
       emit(MobileOTPVerificationSuccessState(response["data"]));
     } on Defaultexception catch (e) {
       emit(MobileOTPVerificationErrorState(e.error));
+    } on UnprocessableEntity catch (e) {
+      emit(MobileOTPVerificationErrorState(e.error));
+    } on BadRequestException catch (e) {
+      emit(MobileOTPVerificationErrorState(e.error));
+    } on ServerErrorException catch (e) {
+      emit(MobileOTPVerificationErrorState(e.error));
+    } on SocketException {
+      emit(MobileOTPVerificationErrorState("No Internet Connection"));
     }
   }
 
@@ -58,11 +71,18 @@ class NumberVerificationBloc
     try {
       var response =
           await resendCodeRepository.resendmobilecodeapi(event.mobile);
-
       emit(ResendMobileCodeSuccessState(data: response["data"]["code"]));
       emit(NumberVerificationInitial());
     } on Defaultexception catch (e) {
       emit(ResendMobileCodeErrorState(e.error));
+    } on BadRequestException catch (e) {
+      emit(ResendMobileCodeErrorState(e.error));
+    } on UnprocessableEntity catch (e) {
+      emit(ResendMobileCodeErrorState(e.error));
+    } on ServerErrorException catch (e) {
+      emit(ResendMobileCodeErrorState(e.error));
+    } on SocketException {
+      emit(ResendMobileCodeErrorState("No Internet Connection"));
     }
   }
 }

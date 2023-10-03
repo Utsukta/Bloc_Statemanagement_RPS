@@ -19,13 +19,10 @@ class ResendCodeRepository {
 
     Future<void> saveAccessToken(String accessToken) async {
       await storetoken.write(key: 'accessToken', value: accessToken);
-      print(' refreshed access token is $accessToken');
     }
 
     var responsedata = jsonDecode(response.body);
-    print(responsedata);
 
-    print("resend code statuscode is ${response.statusCode}");
     switch (response.statusCode) {
       case 200:
         return responsedata;
@@ -39,6 +36,12 @@ class ResendCodeRepository {
         break;
       case 500:
         throw ServerErrorException(error: responsedata["error"]);
+
+      case 400:
+        throw BadRequestException(error: responsedata["error"]);
+
+      case 422:
+        throw UnprocessableEntity(error: responsedata["error"]);
 
       default:
         throw Defaultexception(error: responsedata["error"]);
@@ -58,4 +61,5 @@ Future<String?> refreshAccessToken(String refreshToken) async {
   } else if (response.statusCode == 401) {
     throw RefreshTokenExpired();
   }
+  return null;
 }

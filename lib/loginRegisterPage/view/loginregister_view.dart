@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:rpsbloc/emailverification_page/view/emailverification_view.dart';
 import 'package:rpsbloc/loginRegisterPage/bloc/loginregister_bloc.dart';
 import 'package:rpsbloc/registerpage/view/register_view.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
@@ -167,8 +166,8 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                                       )
                                     ],
                                   ),
-                                  Column(
-                                    children: const [
+                                  const Column(
+                                    children: [
                                       Text(
                                         '1 JPY = 1.010 NPR',
                                         style: TextStyle(

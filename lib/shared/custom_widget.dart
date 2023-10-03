@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 
 // ignore: must_be_immutable
@@ -270,7 +269,7 @@ class CustomContainerWithInputField extends StatelessWidget {
                       style: const TextStyle(fontSize: 10),
                     ),
                     SizedBox(
-                      width: 170,
+                      width: 190,
                       height: 20,
                       child: TextField(
                         keyboardType: TextInputType.number,

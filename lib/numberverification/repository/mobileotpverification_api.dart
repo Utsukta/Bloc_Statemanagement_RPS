@@ -20,18 +20,13 @@ class MobileOTPVerificationRepository {
 
     Future<void> saveAccessToken(String accessToken) async {
       await storetoken.write(key: 'accessToken', value: accessToken);
-      print(' refreshed access token is $accessToken');
     }
-
-    print("Mobile otpverify ${response.body}");
-    print(response.statusCode);
 
     var responsedata = jsonDecode(response.body);
     print(responsedata);
     switch (response.statusCode) {
       case 200:
         return responsedata;
-
       case 401:
         final newAccessToken = await refreshAccessToken(refreshToken!);
         if (newAccessToken != null) {
@@ -40,7 +35,12 @@ class MobileOTPVerificationRepository {
           return await mobileotpverificationapi(mobile, code);
         }
         break;
-
+      case 400:
+        throw BadRequestException(error: responsedata["error"]);
+      case 422:
+        throw UnprocessableEntity(error: responsedata["error"]);
+      case 500:
+        throw ServerErrorException(error: responsedata["error"]);
       default:
         throw Defaultexception(error: responsedata["error"]);
     }
@@ -59,4 +59,5 @@ Future<String?> refreshAccessToken(String refreshToken) async {
   } else if (response.statusCode == 401) {
     throw RefreshTokenExpired();
   }
+  return null;
 }

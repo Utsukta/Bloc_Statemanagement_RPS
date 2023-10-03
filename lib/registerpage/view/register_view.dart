@@ -4,7 +4,6 @@ import 'package:rpsbloc/emailverification_page/view/emailverification_view.dart'
 import 'package:rpsbloc/loginpage/view/login_view.dart';
 import 'package:rpsbloc/registerpage/bloc/register_bloc.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
-import 'package:rpsbloc/test/bloc/ui.dart';
 
 class RegisterPageView extends StatefulWidget {
   const RegisterPageView({super.key});
