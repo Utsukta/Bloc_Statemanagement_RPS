@@ -27,7 +27,6 @@ class HomePageRepository {
       headers: {'Authorization': 'Bearer $accessToken??'},
     );
     final responsedata = jsonDecode(response.body);
-    // print(response.statusCode);
 
     switch (response.statusCode) {
       case 200:

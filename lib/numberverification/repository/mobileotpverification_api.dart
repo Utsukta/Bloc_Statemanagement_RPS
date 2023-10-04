@@ -23,7 +23,7 @@ class MobileOTPVerificationRepository {
     }
 
     var responsedata = jsonDecode(response.body);
-    print(responsedata);
+
     switch (response.statusCode) {
       case 200:
         return responsedata;

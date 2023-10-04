@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rpsbloc/emailverification_page/bloc/emailverification_bloc.dart';
+import 'package:rpsbloc/routes/app_router.gr.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 import 'package:pinput/pinput.dart';
 
+@RoutePage()
 class EmailVerificationView extends StatefulWidget {
   const EmailVerificationView({super.key});
 
@@ -140,8 +143,10 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                           buttontext: "OK",
                           title: "Verification Successful",
                           onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, "/numberverificationpage");
+                            AutoRouter.of(context)
+                                .push(const NumberVerificationRoute());
+                            // Navigator.pushReplacementNamed(
+                            //     context, "/numberverificationpage");
                           },
                           color: Colors.green);
                     });
@@ -338,9 +343,9 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           'Didnot recevie the code?',
                           style: TextStyle(

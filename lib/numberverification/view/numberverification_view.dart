@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:rpsbloc/numberverification/bloc/number_verification_bloc.dart';
 import 'package:rpsbloc/numberverification/view/mobileoptverification_view.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 
+@RoutePage()
 class NumberVerificationPage extends StatefulWidget {
   const NumberVerificationPage({super.key});
 

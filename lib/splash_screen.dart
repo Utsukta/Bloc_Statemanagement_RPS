@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:rpsbloc/routes/app_router.gr.dart';
 
+@RoutePage()
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -13,8 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushNamedAndRemoveUntil(
-          context, '/loginregisterpage', (route) => false);
+      AutoRouter.of(context).push(const LoginRegisterRoute());
     });
   }
 

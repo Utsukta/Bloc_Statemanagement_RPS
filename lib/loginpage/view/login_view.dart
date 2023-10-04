@@ -1,10 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:rpsbloc/homepage/home/view/homepage_view.dart';
 import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
 import 'package:rpsbloc/registerpage/view/register_view.dart';
+import 'package:rpsbloc/routes/app_router.gr.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+@RoutePage()
 class LoginPageView extends StatefulWidget {
   const LoginPageView({super.key});
 
@@ -125,11 +128,13 @@ class _LoginPageViewState extends State<LoginPageView> {
                               listener: (context, state) {
                                 if (state is LoginSuccessState) {
                                   {
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomePageView()),
-                                        (route) => false);
+                                    AutoRouter.of(context)
+                                        .push(const HomeRouteView());
+                                    // Navigator.of(context).pushAndRemoveUntil(
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             const HomePageView()),
+                                    //     (route) => false);
                                   }
                                 }
 
@@ -221,6 +226,7 @@ class _LoginPageViewState extends State<LoginPageView> {
                             ),
 
                             const SizedBox(height: 30),
+                            // ignore: prefer_const_constructors
                             Row(
                               children: const [
                                 Expanded(

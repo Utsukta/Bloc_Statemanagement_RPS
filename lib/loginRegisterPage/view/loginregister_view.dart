@@ -1,10 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:rpsbloc/loginRegisterPage/bloc/loginregister_bloc.dart';
-import 'package:rpsbloc/registerpage/view/register_view.dart';
+import 'package:rpsbloc/routes/app_router.gr.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 
+@RoutePage()
 class LoginRegisterPage extends StatefulWidget {
   const LoginRegisterPage({super.key});
 
@@ -81,7 +83,6 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                   );
                 } else if (state is LoginregisterSuccessState) {
                   final exchangeratedata = state.exchangeratedate;
-
                   return Center(
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 25),
@@ -263,17 +264,14 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                         label: 'Create an account',
                         color: const Color.fromARGB(255, 7, 84, 147),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RegisterPageView()));
+                          AutoRouter.of(context)
+                              .push(const RegisterRouteView());
                         }),
                     const SizedBox(height: 10),
                     CustomButtonwithlabel(
                       label: 'Sign In',
                       onPressed: () {
-                        Navigator.pushNamed(context, '/login');
+                        AutoRouter.of(context).push(const LoginRouteView());
                       },
                       color: Colors.white,
                       textstyle:

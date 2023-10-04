@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:auto_route/auto_route.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,10 +8,11 @@ import 'package:rpsbloc/homepage/barpage.dart/barpage.dart';
 import 'package:rpsbloc/homepage/home/bloc/homepage_bloc.dart';
 import 'package:rpsbloc/homepage/home/model/homepage_model.dart';
 import 'package:rpsbloc/homepage/profile/profile.dart';
-import 'package:rpsbloc/loginpage/view/login_view.dart';
 import 'package:rpsbloc/recepient.dart';
+import 'package:rpsbloc/routes/app_router.gr.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 
+@RoutePage()
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key});
 
@@ -23,8 +25,8 @@ class _HomePageViewState extends State<HomePageView> {
   final List<Widget> pages = [
     const HomepageWidget(),
     const BarPage(),
-    const Recepient(),
-    const Profile()
+    // const Recepient(),
+    // const Profile()
   ];
 
   @override
@@ -132,8 +134,10 @@ class _HomepageWidgetState extends State<HomepageWidget> {
       bloc: homepagebloc,
       listener: (context, state) {
         if (state is RefreshTokenExpiredState) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const LoginPageView()));
+          AutoRouter.of(context).push(const LoginRouteView());
+
+          // Navigator.pushReplacement(context,
+          //     MaterialPageRoute(builder: (context) => const LoginPageView()));
         }
       },
       builder: (context, state) {
@@ -218,8 +222,8 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                             ),
                             Column(
                               children: [
-                                Row(
-                                  children: const [
+                                const Row(
+                                  children: [
                                     SizedBox(width: 65),
                                     Text(
                                       'Available balance',
@@ -519,8 +523,8 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                         width: MediaQuery.of(context).size.width,
                         child: Column(
                           children: [
-                            Row(
-                              children: const [
+                            const Row(
+                              children: [
                                 Text(
                                   'Recent Transactions',
                                   style: TextStyle(
@@ -782,11 +786,11 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                         child: Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 25, vertical: 5),
-                          child: Column(
+                          child: const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                children: const [
+                                children: [
                                   Text(
                                     'Utility Payments',
                                     style: TextStyle(
@@ -795,13 +799,13 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
+                              SizedBox(
                                 height: 15,
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
+                                children: [
                                   CustomButtonWithIcon(
                                     icon: Icons.light_outlined,
                                     label: 'Electricity',
@@ -821,11 +825,11 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                                   )
                                 ],
                               ),
-                              const SizedBox(height: 20),
+                              SizedBox(height: 20),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
+                                children: [
                                   CustomButtonWithIcon(
                                     icon: Icons.clean_hands_outlined,
                                     label: 'EMI',

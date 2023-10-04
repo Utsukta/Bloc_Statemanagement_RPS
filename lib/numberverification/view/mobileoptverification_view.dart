@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rpsbloc/numberverification/bloc/number_verification_bloc.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 import 'package:pinput/pinput.dart';
 
+@RoutePage()
 class MobileOTPVerification extends StatefulWidget {
   const MobileOTPVerification({super.key});
 
@@ -339,9 +341,9 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           'Didnot recevie the code?',
                           style: TextStyle(

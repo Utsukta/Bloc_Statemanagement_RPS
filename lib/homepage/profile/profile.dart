@@ -1,10 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rpsbloc/homepage/profile/bloc/profile_bloc.dart';
 import 'package:rpsbloc/homepage/repository/homepage_api.dart';
 import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
+import 'package:rpsbloc/routes/app_router.gr.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 
+@RoutePage()
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -36,8 +39,8 @@ class _ProfileState extends State<Profile> {
                   const SizedBox(
                     height: 35,
                   ),
-                  Row(
-                    children: const [
+                  const Row(
+                    children: [
                       SizedBox(
                         width: 25,
                       ),
@@ -77,9 +80,9 @@ class _ProfileState extends State<Profile> {
                       const SizedBox(
                         width: 10,
                       ),
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'XXXX',
                             style: TextStyle(
@@ -137,18 +140,18 @@ class _ProfileState extends State<Profile> {
                       onPressed: () {
                         showDialogBox(context);
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 20),
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                         child: Row(
                           children: [
                             // SvgPicture.asset('assets/profiletest.svg'),
-                            const SizedBox(
+                            SizedBox(
                               width: 15,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Text(
                                   'Profile & Settings',
                                   style: TextStyle(
@@ -174,18 +177,18 @@ class _ProfileState extends State<Profile> {
                               width: 2,
                               color: Color.fromARGB(255, 5, 97, 172))),
                       onPressed: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 20),
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                         child: Row(
                           children: [
                             // SvgPicture.asset('assets/profiletest.svg'),
-                            const SizedBox(
+                            SizedBox(
                               width: 15,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Text(
                                   'Change Mpin',
                                   style: TextStyle(
@@ -255,13 +258,14 @@ Future showDialogBox(BuildContext context) {
                               backgroundColor:
                                   const Color.fromARGB(255, 8, 75, 129)),
                           onPressed: () {
-                            Navigator.pop(context);
+                            AutoRouter.of(context).pop(context);
+                            // Navigator.pop(context);
                           },
                           child: const Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 13),
+                                horizontal: 20, vertical: 13),
                             child: Text(
-                              "cancel",
+                              "Cancel",
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -269,8 +273,10 @@ Future showDialogBox(BuildContext context) {
                         BlocListener<ProfileBloc, ProfileState>(
                           listener: (context, state) {
                             if (state is ExitbuttonClickedState) {
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, '/login', (route) => false);
+                              AutoRouter.of(context)
+                                  .push(const LoginRouteView());
+                              // Navigator.pushNamedAndRemoveUntil(
+                              //     context, '/login', (route) => false);
                               loginBloc.add(LogoutSuccessEvent());
                             }
                           },
@@ -287,7 +293,7 @@ Future showDialogBox(BuildContext context) {
                                 backgroundColor: Colors.green),
                             child: const Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 13),
+                                  horizontal: 30, vertical: 13),
                               child: Text(
                                 "Exit",
                                 style: TextStyle(color: Colors.white),

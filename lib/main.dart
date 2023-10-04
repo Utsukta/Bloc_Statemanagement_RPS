@@ -2,17 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rpsbloc/emailverification_page/bloc/emailverification_bloc.dart';
 import 'package:rpsbloc/homepage/home/bloc/homepage_bloc.dart';
-import 'package:rpsbloc/homepage/home/view/homepage_view.dart';
 import 'package:rpsbloc/homepage/profile/bloc/profile_bloc.dart';
 import 'package:rpsbloc/loginRegisterPage/bloc/loginregister_bloc.dart';
-import 'package:rpsbloc/loginRegisterPage/view/loginregister_view.dart';
 import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
-import 'package:rpsbloc/loginpage/view/login_view.dart';
 import 'package:rpsbloc/numberverification/bloc/number_verification_bloc.dart';
-import 'package:rpsbloc/numberverification/view/numberverification_view.dart';
 import 'package:rpsbloc/registerpage/bloc/register_bloc.dart';
-import 'package:rpsbloc/registerpage/view/register_view.dart';
-import 'package:rpsbloc/splash_screen.dart';
+import 'package:rpsbloc/routes/app_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +18,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appRouter = AppRouter();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -47,18 +43,19 @@ class MyApp extends StatelessWidget {
           create: (context) => NumberVerificationBloc(),
         ),
       ],
-      child: MaterialApp(
-          routes: {
-            '/loginregisterpage': (context) => const LoginRegisterPage(),
-            '/login': (context) => const LoginPageView(),
-            '/register': (context) => const RegisterPageView(),
-            '/homepage': (context) => const HomePageView(),
-            '/numberverificationpage': (context) =>
-                const NumberVerificationPage(),
-          },
-          debugShowCheckedModeBanner: false,
-          title: 'RPS',
-          home: const SplashScreen()),
+      child: MaterialApp.router(
+        routerConfig: appRouter.config(),
+        // routes: {
+        //   '/loginregisterpage': (context) => const LoginRegisterPage(),
+        //   '/login': (context) => const LoginPageView(),
+        //   '/register': (context) => const RegisterPageView(),
+        //   '/homepage': (context) => const HomePageView(),
+        //   '/numberverificationpage': (context) =>
+        //       const NumberVerificationPage(),
+        // },
+        debugShowCheckedModeBanner: false,
+        title: 'RPS',
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rpsbloc/emailverification_page/view/emailverification_view.dart';
@@ -5,6 +6,7 @@ import 'package:rpsbloc/loginpage/view/login_view.dart';
 import 'package:rpsbloc/registerpage/bloc/register_bloc.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 
+@RoutePage()
 class RegisterPageView extends StatefulWidget {
   const RegisterPageView({super.key});
 
@@ -255,8 +257,8 @@ class _RegisterPageViewState extends State<RegisterPageView> {
 
                             const SizedBox(height: 15),
 
-                            Row(
-                              children: const [
+                            const Row(
+                              children: [
                                 Expanded(
                                     child: Divider(
                                   thickness: 1,
