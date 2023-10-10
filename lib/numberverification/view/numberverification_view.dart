@@ -4,12 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:rpsbloc/numberverification/bloc/number_verification_bloc.dart';
-import 'package:rpsbloc/numberverification/view/mobileoptverification_view.dart';
+import 'package:rpsbloc/routes/app_router.gr.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 
 @RoutePage()
 class NumberVerificationPage extends StatefulWidget {
-  const NumberVerificationPage({super.key});
+  const NumberVerificationPage({
+    super.key,
+  });
 
   @override
   State<NumberVerificationPage> createState() => _NumberVerificationPageState();
@@ -101,14 +103,15 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
           BlocConsumer<NumberVerificationBloc, NumberVerificationState>(
             listener: (context, state) {
               if (state is NumberVerificationSuccess) {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        settings: RouteSettings(
-                            arguments: numberverificationcontroller.text
-                                .replaceAll("-", "")
-                                .toString()),
-                        builder: (context) => const MobileOTPVerification()));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.mobile.toString()),
+                  ),
+                );
+                AutoRouter.of(context).push(MobileOTPVerificationRoute(
+                    text: numberverificationcontroller.text
+                        .replaceAll("-", "")
+                        .toString()));
               }
               if (state is NumberVerificationErrorState) {
                 showDialog(

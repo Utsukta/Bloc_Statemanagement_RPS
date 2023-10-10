@@ -24,6 +24,7 @@ class EmailverificationBloc
     try {
       var response = await emailVerificationRepository.emailverificationapi(
           event.email, event.code);
+   
       emit(EmailverificationSuccess(response["data"]));
     } on Defaultexception catch (e) {
       emit(EmailverificationErrorState(e.error));
@@ -43,6 +44,7 @@ class EmailverificationBloc
     emit(ResendCodeLoadingState());
     try {
       var response = await resendCodeRepository.resendcodeapi(event.email);
+
 
       emit(ResendCodeSuccessState(data: response["data"]));
     } on Defaultexception catch (e) {

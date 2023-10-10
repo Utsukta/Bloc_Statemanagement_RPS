@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rpsbloc/emailverification_page/view/emailverification_view.dart';
 import 'package:rpsbloc/loginpage/view/login_view.dart';
 import 'package:rpsbloc/registerpage/bloc/register_bloc.dart';
+import 'package:rpsbloc/routes/app_router.gr.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 
 @RoutePage()
@@ -177,13 +177,9 @@ class _RegisterPageViewState extends State<RegisterPageView> {
                               bloc: registerbloc,
                               listener: (context, state) {
                                 if (state is RegisterSuccess) {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          settings: RouteSettings(
-                                              arguments: emailController.text),
-                                          builder: (context) =>
-                                              const EmailVerificationView()));
+                                  AutoRouter.of(context).push(
+                                      EmailVerificationView(
+                                          text: emailController.text));
                                 } else if (state is RegisterError) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(state.message)));

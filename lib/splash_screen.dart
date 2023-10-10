@@ -11,6 +11,7 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
+
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
@@ -18,6 +19,13 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () {
       AutoRouter.of(context).push(const LoginRegisterRoute());
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    const SplashScreen();
+    super.dispose();
   }
 
   @override
@@ -30,7 +38,11 @@ class _SplashScreenState extends State<SplashScreen> {
                     image: AssetImage('assets/icons/splash-bg.png'),
                     fit: BoxFit.cover)),
             child: Center(
-              child: Image.asset('assets/images/splash.png'),
+              child: Image.asset(
+                'assets/images/splash.png',
+                height: 150,
+                width: MediaQuery.of(context).size.width,
+              ),
             )));
   }
 }

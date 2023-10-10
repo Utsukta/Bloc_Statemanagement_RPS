@@ -3,12 +3,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rpsbloc/numberverification/bloc/number_verification_bloc.dart';
+import 'package:rpsbloc/routes/app_router.gr.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 import 'package:pinput/pinput.dart';
 
 @RoutePage()
 class MobileOTPVerification extends StatefulWidget {
-  const MobileOTPVerification({super.key});
+  final String number;
+  const MobileOTPVerification({super.key, required this.number});
 
   @override
   State<MobileOTPVerification> createState() => _MobileOTPVerificationState();
@@ -57,7 +59,6 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
 
   @override
   Widget build(BuildContext context) {
-    final mobile = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -70,7 +71,8 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
               width: 40,
             ),
             onTap: () {
-              Navigator.pop(context);
+              AutoRouter.of(context).pop();
+              // Navigator.pop(context);
             },
           ),
           const SizedBox(
@@ -92,7 +94,7 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                 style: TextStyle(fontSize: 16),
               ),
               Text(
-                mobile.toString(),
+                widget.number,
                 style: const TextStyle(color: Color.fromARGB(255, 7, 92, 162)),
               ),
             ],
@@ -137,6 +139,11 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
           BlocConsumer<NumberVerificationBloc, NumberVerificationState>(
             listener: (context, state) {
               if (state is MobileOTPVerificationSuccessState) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message.toString()),
+                  ),
+                );
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -146,7 +153,8 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                           buttontext: "OK",
                           title: "Verification Successful",
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, "/login");
+                            context.router.push(const LoginRouteView());
+                            // Navigator.pushReplacementNamed(context, "/login");
                           },
                           color: Colors.green);
                     });
@@ -192,7 +200,8 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                             onPressed: () {
                               mobileOtpVerification.add(
                                   MobileVerifyButtonClickedEvent(
-                                      mobile.toString(), pinController.text));
+                                      widget.number.toString(),
+                                      pinController.text));
                             },
                             color: const Color.fromARGB(255, 12, 101, 173),
                           )
@@ -235,7 +244,7 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                                 onTap: () {
                                   mobileOtpVerification.add(
                                       ResendCodeButtonClicked(
-                                          mobile.toString()));
+                                          widget.number.toString()));
                                   setState(() {
                                     enableResend = false;
                                   });
@@ -302,7 +311,7 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                                 onTap: () {
                                   mobileOtpVerification.add(
                                       MobileVerifyButtonClickedEvent(
-                                          mobile.toString(),
+                                          widget.number.toString(),
                                           pinController.text));
                                   setState(() {
                                     enableResend = false;

@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:rpsbloc/homepage/home/view/homepage_view.dart';
 import 'package:rpsbloc/loginpage/bloc/login_bloc.dart';
-import 'package:rpsbloc/registerpage/view/register_view.dart';
 import 'package:rpsbloc/routes/app_router.gr.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -270,11 +268,13 @@ class _LoginPageViewState extends State<LoginPageView> {
                                         color: Colors.black, fontSize: 15)),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const RegisterPageView()));
+                                    AutoRouter.of(context)
+                                        .push(const RegisterRouteView());
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             const RegisterPageView()));
                                   },
                                   child: const Text(
                                     'Sign Up',

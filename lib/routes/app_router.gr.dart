@@ -9,6 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i13;
+import 'package:flutter/material.dart' as _i14;
 import 'package:rpsbloc/emailverification_page/view/emailverification_view.dart'
     as _i2;
 import 'package:rpsbloc/homepage/barpage.dart/barpage.dart' as _i1;
@@ -37,9 +38,16 @@ abstract class $AppRouter extends _i13.RootStackRouter {
       );
     },
     EmailVerificationView.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<EmailVerificationViewArgs>(
+          orElse: () =>
+              EmailVerificationViewArgs(text: pathParams.getString('text')));
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.EmailVerificationView(),
+        child: _i2.EmailVerificationView(
+          key: args.key,
+          text: args.text,
+        ),
       );
     },
     HomeRouteView.name: (routeData) {
@@ -66,10 +74,14 @@ abstract class $AppRouter extends _i13.RootStackRouter {
         child: const _i6.LoginRegisterPage(),
       );
     },
-    MobileOTPVerification.name: (routeData) {
+    MobileOTPVerificationRoute.name: (routeData) {
+      final args = routeData.argsAs<MobileOTPVerificationArgs>();
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.MobileOTPVerification(),
+        child: _i7.MobileOTPVerification(
+          key: args.key,
+          number: args.text,
+        ),
       );
     },
     NumberVerificationRoute.name: (routeData) {
@@ -121,16 +133,42 @@ class BarRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.EmailVerificationView]
-class EmailVerificationView extends _i13.PageRouteInfo<void> {
-  const EmailVerificationView({List<_i13.PageRouteInfo>? children})
-      : super(
+class EmailVerificationView
+    extends _i13.PageRouteInfo<EmailVerificationViewArgs> {
+  EmailVerificationView({
+    _i14.Key? key,
+    required String text,
+    List<_i13.PageRouteInfo>? children,
+  }) : super(
           EmailVerificationView.name,
+          args: EmailVerificationViewArgs(
+            key: key,
+            text: text,
+          ),
+          rawPathParams: {'text': text},
           initialChildren: children,
         );
 
   static const String name = 'EmailVerificationView';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static const _i13.PageInfo<EmailVerificationViewArgs> page =
+      _i13.PageInfo<EmailVerificationViewArgs>(name);
+}
+
+class EmailVerificationViewArgs {
+  const EmailVerificationViewArgs({
+    this.key,
+    required this.text,
+  });
+
+  final _i14.Key? key;
+
+  final String text;
+
+  @override
+  String toString() {
+    return 'EmailVerificationViewArgs{key: $key, text: $text}';
+  }
 }
 
 /// generated route for
@@ -190,17 +228,42 @@ class LoginRegisterRoute extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.MobileOTPVerification]
-class MobileOTPVerification extends _i13.PageRouteInfo<void> {
-  const MobileOTPVerification({List<_i13.PageRouteInfo>? children})
-      : super(
-          MobileOTPVerification.name,
+/// [_i7.MobileOTPVerificationRoute]
+class MobileOTPVerificationRoute
+    extends _i13.PageRouteInfo<MobileOTPVerificationArgs> {
+  MobileOTPVerificationRoute({
+    _i14.Key? key,
+    required dynamic text,
+    List<_i13.PageRouteInfo>? children,
+  }) : super(
+          MobileOTPVerificationRoute.name,
+          args: MobileOTPVerificationArgs(
+            key: key,
+            text: text,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'MobileOTPVerification';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static const _i13.PageInfo<MobileOTPVerificationArgs> page =
+      _i13.PageInfo<MobileOTPVerificationArgs>(name);
+}
+
+class MobileOTPVerificationArgs {
+  const MobileOTPVerificationArgs({
+    this.key,
+    required this.text,
+  });
+
+  final _i14.Key? key;
+
+  final dynamic text;
+
+  @override
+  String toString() {
+    return 'MobileOTPVerificationArgs{key: $key, text: $text}';
+  }
 }
 
 /// generated route for

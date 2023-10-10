@@ -254,22 +254,23 @@ class CustomContainerWithInputField extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 label,
-                style:
-                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 15),
               ),
               Icon(icon),
-              const Expanded(child: SizedBox()),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Text(
                       name,
-                      style: const TextStyle(fontSize: 10),
+                      style: const TextStyle(
+                          fontSize: 10,
+                          color: Color.fromARGB(255, 108, 107, 107)),
                     ),
                     SizedBox(
-                      width: 190,
                       height: 20,
                       child: TextField(
                         keyboardType: TextInputType.number,

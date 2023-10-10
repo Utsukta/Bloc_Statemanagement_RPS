@@ -14,7 +14,7 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: HomeRouteView.page),
         AutoRoute(page: Profile.page),
         AutoRoute(page: NumberVerificationRoute.page),
-        AutoRoute(page: MobileOTPVerification.page),
+        AutoRoute(page: MobileOTPVerificationRoute.page),
         AutoRoute(page: HomepageWidget.page),
         AutoRoute(page: Recepient.page),
       ];

@@ -86,13 +86,13 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                   return Center(
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 25),
-                      height: 270,
+                      height: 260,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 246, 244, 244),
                           borderRadius: BorderRadius.circular(15)),
                       child: Padding(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

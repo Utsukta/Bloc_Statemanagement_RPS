@@ -7,10 +7,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rpsbloc/homepage/barpage.dart/barpage.dart';
 import 'package:rpsbloc/homepage/home/bloc/homepage_bloc.dart';
 import 'package:rpsbloc/homepage/home/model/homepage_model.dart';
-import 'package:rpsbloc/homepage/profile/profile.dart';
-import 'package:rpsbloc/recepient.dart';
-import 'package:rpsbloc/routes/app_router.gr.dart';
+// import 'package:rpsbloc/homepage/profile/profile.dart';
+// import 'package:rpsbloc/recepient.dart';
+// import 'package:rpsbloc/routes/app_router.gr.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
+import '../../../routes/app_router.gr.dart';
 
 @RoutePage()
 class HomePageView extends StatefulWidget {
@@ -22,11 +23,11 @@ class HomePageView extends StatefulWidget {
 
 class _HomePageViewState extends State<HomePageView> {
   int selectedIndex = 0;
-  final List<Widget> pages = [
+  final List pages = [
     const HomepageWidget(),
     const BarPage(),
-    // const Recepient(),
-    // const Profile()
+    const Recepient(),
+    const Profile()
   ];
 
   @override

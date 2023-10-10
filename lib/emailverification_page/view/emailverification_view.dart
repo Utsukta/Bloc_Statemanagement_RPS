@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,8 @@ import 'package:pinput/pinput.dart';
 
 @RoutePage()
 class EmailVerificationView extends StatefulWidget {
-  const EmailVerificationView({super.key});
+  String text;
+  EmailVerificationView({super.key, @PathParam('text') required this.text});
 
   @override
   State<EmailVerificationView> createState() => _EmailVerificationViewState();
@@ -58,7 +61,8 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
 
   @override
   Widget build(BuildContext context) {
-    final email = ModalRoute.of(context)!.settings.arguments;
+   
+
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -71,7 +75,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
               width: 40,
             ),
             onTap: () {
-              Navigator.pop(context);
+              AutoRouter.of(context).pop();
             },
           ),
           const SizedBox(
@@ -91,7 +95,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
             style: TextStyle(fontSize: 16),
           ),
           Text(
-            email.toString(),
+            widget.text,
             style: const TextStyle(color: Color.fromARGB(255, 7, 92, 162)),
           ),
 
@@ -173,7 +177,8 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                           buttontext: "Retry",
                           title: "Verification Failed",
                           onPressed: () {
-                            Navigator.pop(context);
+                            AutoRouter.of(context).pop();
+                            // Navigator.pop(context);
                           },
                           color: Colors.red);
                     });
@@ -194,7 +199,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                             onPressed: () {
                               emailverificationBloc.add(
                                   VerifyButtonClickedEvent(
-                                      email: email.toString(),
+                                      email: widget.text.toString(),
                                       code: pinController.text.toString()));
                             },
                             color: const Color.fromARGB(255, 12, 101, 173),
@@ -238,7 +243,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                                 onTap: () {
                                   emailverificationBloc.add(
                                       ResendCodeButtonClicked(
-                                          email: email.toString()));
+                                          email: widget.text.toString()));
                                   setState(() {
                                     enableResend = false;
                                   });
@@ -305,7 +310,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                                 onTap: () {
                                   emailverificationBloc.add(
                                       ResendCodeButtonClicked(
-                                          email: email.toString()));
+                                          email: widget.text.toString()));
                                   setState(() {
                                     enableResend = false;
                                   });
