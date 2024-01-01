@@ -80,7 +80,6 @@ class _LoginPageViewState extends State<LoginPageView> {
                                   } else {
                                     return null;
                                   }
-                                  return null;
                                 }),
                             const SizedBox(height: 20),
                             CustomInputFieldwithlabel(
@@ -128,11 +127,6 @@ class _LoginPageViewState extends State<LoginPageView> {
                                   {
                                     AutoRouter.of(context)
                                         .push(const HomeRouteView());
-                                    // Navigator.of(context).pushAndRemoveUntil(
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             const HomePageView()),
-                                    //     (route) => false);
                                   }
                                 }
 
@@ -148,7 +142,8 @@ class _LoginPageViewState extends State<LoginPageView> {
                                 // final loginBloc = context.read<LoginBloc>();
                                 final loginBloc =
                                     BlocProvider.of<LoginBloc>(context);
-                                if (state is LoginInitial) {
+                                if (state is LoginInitial ||
+                                    state is LogoutSuccessState) {
                                   if (isPasswordValueChanged == true &&
                                       isEmailValueChanged == true) {
                                     return CustomButtonwithlabel(
@@ -203,18 +198,18 @@ class _LoginPageViewState extends State<LoginPageView> {
                                       label: 'Log In', onPressed: () {});
                                 }
 
-                                if (state is LogoutSuccessState) {
-                                  return CustomButtonwithlabel(
-                                      label: 'Login',
-                                      onPressed: () {
-                                        if (formKey.currentState!.validate()) {
-                                          loginBloc.add(LoginButtonCLickedEvent(
-                                            email: emailController.text,
-                                            password: passwordController.text,
-                                          ));
-                                        }
-                                      });
-                                }
+                                // if (state is LogoutSuccessState) {
+                                //   return CustomButtonwithlabel(
+                                //       label: 'Login',
+                                //       onPressed: () {
+                                //         if (formKey.currentState!.validate()) {
+                                //           loginBloc.add(LoginButtonCLickedEvent(
+                                //             email: emailController.text,
+                                //             password: passwordController.text,
+                                //           ));
+                                //         }
+                                //       });
+                                // }
 
                                 return CustomButtonwithlabel(
                                     color: Colors.grey,
@@ -270,11 +265,6 @@ class _LoginPageViewState extends State<LoginPageView> {
                                   onTap: () {
                                     AutoRouter.of(context)
                                         .push(const RegisterRouteView());
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             const RegisterPageView()));
                                   },
                                   child: const Text(
                                     'Sign Up',

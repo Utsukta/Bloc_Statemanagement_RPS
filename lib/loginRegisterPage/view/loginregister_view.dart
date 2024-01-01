@@ -82,6 +82,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                             const Center(child: CircularProgressIndicator())),
                   );
                 } else if (state is LoginregisterSuccessState) {
+                 
                   final exchangeratedata = state.exchangeratedate;
                   return Center(
                     child: Container(
@@ -126,19 +127,18 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                                         var jpyamountwithoutcomma =
                                             jpyamountcontroller.text
                                                 .replaceAll(",", '');
-                                        for (var i = 0;
-                                            i < exchangeratedata.data.length;
-                                            i++) {
-                                          // nprconvertedtamount = (num.parse(
-                                          //         jpyamountwithoutcomma) *
-                                          //     exchangeratedata.data[i].rate).toStringAsFixed(2);
-                                          nprconvertedtamount = myFormat.format(
-                                              (num.parse(
-                                                      jpyamountwithoutcomma) *
-                                                  exchangeratedata
-                                                      .data[i].rate));
-                                        }
-                                      } else {
+                                        // for (var i = 0;
+                                        //     i < exchangeratedata.data.length;
+                                        //     i++) {
+                                        // nprconvertedtamount = (num.parse(
+                                        //         jpyamountwithoutcomma) *
+                                        //     exchangeratedata.data[i].rate).toStringAsFixed(2);
+                                        nprconvertedtamount = myFormat.format(
+                                            (num.parse(jpyamountwithoutcomma) *
+                                                exchangeratedata.data.rate));
+                                      }
+                                      // }
+                                      else {
                                         if (jpyamountcontroller.text.isEmpty) {
                                           nprconvertedtamount = '0.00';
                                         }

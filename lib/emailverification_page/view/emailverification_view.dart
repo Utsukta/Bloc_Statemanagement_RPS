@@ -23,7 +23,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
   bool enableResend = false;
   late Timer timer;
   int _secondsRemaining = 120;
-  String get formattedTime {
+    get formattedTime {
     final minutes = _secondsRemaining ~/ 60;
     final seconds = _secondsRemaining % 60;
     return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
@@ -61,8 +61,6 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
 
   @override
   Widget build(BuildContext context) {
-   
-
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -139,6 +137,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
             listener: (context, state) {
               if (state is EmailverificationSuccess) {
                 showDialog(
+                    barrierDismissible: false,
                     context: context,
                     builder: (BuildContext context) {
                       return CustomAlertDialogBox(
@@ -149,8 +148,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                           onPressed: () {
                             AutoRouter.of(context)
                                 .push(const NumberVerificationRoute());
-                            // Navigator.pushReplacementNamed(
-                            //     context, "/numberverificationpage");
+                           
                           },
                           color: Colors.green);
                     });
@@ -169,6 +167,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
 
               if (state is EmailverificationErrorState) {
                 showDialog(
+                    barrierDismissible: false,
                     context: context,
                     builder: (BuildContext context) {
                       return CustomAlertDialogBox(

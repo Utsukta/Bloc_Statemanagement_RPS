@@ -23,7 +23,7 @@ class _RegisterPageViewState extends State<RegisterPageView> {
   bool isEmailValueChanged = false;
   bool isPasswordValueChanged = false;
   bool isConfirmPasswordValueChanged = false;
-  final registerbloc = RegisterBloc();
+  final registerbloc = RegisterBloc(); //use get_it insetad of this 
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ part 'register_event.dart';
 part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  final registerRepository = RegisterRepository();
+  final registerRepository = RegisterRepository(); //use get_it instead of this 
   RegisterBloc() : super(RegisterInitial()) {
     on<RegisterButtonClickedEvent>(registerButtonClickedEvent);
   }

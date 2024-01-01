@@ -146,6 +146,7 @@ class _MobileOTPVerificationState extends State<MobileOTPVerification> {
                 );
                 showDialog(
                     context: context,
+                    barrierDismissible: false,
                     builder: (BuildContext context) {
                       return CustomAlertDialogBox(
                           icon: Icons.check,

@@ -13,16 +13,16 @@ import 'package:flutter/material.dart' as _i14;
 import 'package:rpsbloc/emailverification_page/view/emailverification_view.dart'
     as _i2;
 import 'package:rpsbloc/homepage/barpage.dart/barpage.dart' as _i1;
-import 'package:rpsbloc/homepage/home/view/homepage_view.dart' as _i3;
+import 'package:rpsbloc/homepage/home/view/homepage_view.dart' as _i4;
+import 'package:rpsbloc/homepage/home_view.dart' as _i3;
 import 'package:rpsbloc/homepage/profile/profile.dart' as _i9;
-import 'package:rpsbloc/homepagewidget.dart' as _i4;
+import 'package:rpsbloc/homepage/recepient.dart' as _i10;
 import 'package:rpsbloc/loginpage/view/login_view.dart' as _i5;
 import 'package:rpsbloc/loginRegisterPage/view/loginregister_view.dart' as _i6;
 import 'package:rpsbloc/numberverification/view/mobileoptverification_view.dart'
     as _i7;
 import 'package:rpsbloc/numberverification/view/numberverification_view.dart'
     as _i8;
-import 'package:rpsbloc/recepient.dart' as _i10;
 import 'package:rpsbloc/registerpage/view/register_view.dart' as _i11;
 import 'package:rpsbloc/splash_screen.dart' as _i12;
 
@@ -74,13 +74,13 @@ abstract class $AppRouter extends _i13.RootStackRouter {
         child: const _i6.LoginRegisterPage(),
       );
     },
-    MobileOTPVerificationRoute.name: (routeData) {
+    MobileOTPVerification.name: (routeData) {
       final args = routeData.argsAs<MobileOTPVerificationArgs>();
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i7.MobileOTPVerification(
           key: args.key,
-          number: args.text,
+          number: args.number,
         ),
       );
     },
@@ -228,18 +228,18 @@ class LoginRegisterRoute extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.MobileOTPVerificationRoute]
-class MobileOTPVerificationRoute
+/// [_i7.MobileOTPVerification]
+class MobileOTPVerification
     extends _i13.PageRouteInfo<MobileOTPVerificationArgs> {
-  MobileOTPVerificationRoute({
+  MobileOTPVerification({
     _i14.Key? key,
-    required dynamic text,
+    required String number,
     List<_i13.PageRouteInfo>? children,
   }) : super(
-          MobileOTPVerificationRoute.name,
+          MobileOTPVerification.name,
           args: MobileOTPVerificationArgs(
             key: key,
-            text: text,
+            number: number,
           ),
           initialChildren: children,
         );
@@ -253,16 +253,16 @@ class MobileOTPVerificationRoute
 class MobileOTPVerificationArgs {
   const MobileOTPVerificationArgs({
     this.key,
-    required this.text,
+    required this.number,
   });
 
   final _i14.Key? key;
 
-  final dynamic text;
+  final String number;
 
   @override
   String toString() {
-    return 'MobileOTPVerificationArgs{key: $key, text: $text}';
+    return 'MobileOTPVerificationArgs{key: $key, number: $number}';
   }
 }
 

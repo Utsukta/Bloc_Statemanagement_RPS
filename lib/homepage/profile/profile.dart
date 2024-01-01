@@ -275,8 +275,7 @@ Future showDialogBox(BuildContext context) {
                             if (state is ExitbuttonClickedState) {
                               AutoRouter.of(context)
                                   .push(const LoginRouteView());
-                              // Navigator.pushNamedAndRemoveUntil(
-                              //     context, '/login', (route) => false);
+
                               loginBloc.add(LogoutSuccessEvent());
                             }
                           },

@@ -10,15 +10,15 @@ import 'package:rpsbloc/registerpage/bloc/register_bloc.dart';
 import 'package:rpsbloc/routes/app_router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+   MyApp({super.key});
+final appRouter = AppRouter();
   @override
   Widget build(BuildContext context) {
-    final appRouter = AppRouter();
+    
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -45,14 +45,6 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         routerConfig: appRouter.config(),
-        // routes: {
-        //   '/loginregisterpage': (context) => const LoginRegisterPage(),
-        //   '/login': (context) => const LoginPageView(),
-        //   '/register': (context) => const RegisterPageView(),
-        //   '/homepage': (context) => const HomePageView(),
-        //   '/numberverificationpage': (context) =>
-        //       const NumberVerificationPage(),
-        // },
         debugShowCheckedModeBanner: false,
         title: 'RPS',
       ),

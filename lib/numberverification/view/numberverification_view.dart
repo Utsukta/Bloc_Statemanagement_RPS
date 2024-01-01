@@ -29,6 +29,9 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
+            onTap: () {
+              AutoRouter.of(context).pop();
+            },
             child: Image.asset(
               'assets/icons/back_arrow.png',
               height: 40,
@@ -108,8 +111,9 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                     content: Text(state.mobile.toString()),
                   ),
                 );
-                AutoRouter.of(context).push(MobileOTPVerificationRoute(
-                    text: numberverificationcontroller.text
+                //auto route ma different banaunu parxa - ambiguity vairaxa so comment gareko
+                AutoRouter.of(context).push(MobileOTPVerification(
+                    number: numberverificationcontroller.text
                         .replaceAll("-", "")
                         .toString()));
               }

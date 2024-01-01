@@ -323,7 +323,7 @@ class _CustomAlertDialogBoxState extends State<CustomAlertDialogBox> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       content: Builder(builder: (context) {
         return SizedBox(
-          height: 250,
+          height: 300,
           width: 300,
           child: Column(
             children: [

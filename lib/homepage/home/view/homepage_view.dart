@@ -4,105 +4,13 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rpsbloc/homepage/barpage.dart/barpage.dart';
 import 'package:rpsbloc/homepage/home/bloc/homepage_bloc.dart';
-import 'package:rpsbloc/homepage/home/model/homepage_model.dart';
-// import 'package:rpsbloc/homepage/profile/profile.dart';
-// import 'package:rpsbloc/recepient.dart';
-// import 'package:rpsbloc/routes/app_router.gr.dart';
+import 'package:rpsbloc/homepage/model/homepage_model.dart';
+import 'package:rpsbloc/routes/app_router.gr.dart';
 import 'package:rpsbloc/shared/custom_widget.dart';
-import '../../../routes/app_router.gr.dart';
+
 
 @RoutePage()
-class HomePageView extends StatefulWidget {
-  const HomePageView({super.key});
-
-  @override
-  State<HomePageView> createState() => _HomePageViewState();
-}
-
-class _HomePageViewState extends State<HomePageView> {
-  int selectedIndex = 0;
-  final List pages = [
-    const HomepageWidget(),
-    const BarPage(),
-    const Recepient(),
-    const Profile()
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: pages[selectedIndex],
-        floatingActionButton: SizedBox(
-          height: 60,
-          width: 60,
-          child: FloatingActionButton(
-            backgroundColor: const Color.fromARGB(255, 9, 95, 164),
-            onPressed: () {},
-            child: const Icon(
-              Icons.send_outlined,
-              size: 35,
-            ),
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomAppBar(
-          notchMargin: 6,
-          elevation: 5,
-          clipBehavior: Clip.antiAlias,
-          shape: const CircularNotchedRectangle(),
-          child: BottomNavigationBar(
-            onTap: (index) {
-              setState(() {
-                selectedIndex = index;
-              });
-            },
-            type: BottomNavigationBarType.fixed,
-            unselectedItemColor: const Color.fromARGB(255, 100, 98, 98),
-            items: [
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    "assets/icons/home/nav/home.svg",
-                    colorFilter: ColorFilter.mode(
-                        selectedIndex == 0 ? Colors.blue : Colors.grey,
-                        BlendMode.srcIn),
-                  ),
-                  label: ''),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    "assets/icons/home/nav/bars.svg",
-                    colorFilter: ColorFilter.mode(
-                        selectedIndex == 1 ? Colors.blue : Colors.grey,
-                        BlendMode.srcIn),
-                  ),
-                  label: ''),
-              BottomNavigationBarItem(
-                  icon: SvgPicture.asset(
-                    'assets/icons/home/nav/recepient.svg',
-                    colorFilter: ColorFilter.mode(
-                        selectedIndex == 2 ? Colors.blue : Colors.grey,
-                        BlendMode.srcIn),
-                  ),
-                  label: ''),
-              BottomNavigationBarItem(
-                  icon: selectedIndex == 3
-                      ? SvgPicture.asset(
-                          'assets/icons/home/nav/profile_selected.svg',
-                        )
-                      : SvgPicture.asset(
-                          'assets/icons/home/nav/profile.svg',
-                        ),
-                  label: ''),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class HomepageWidget extends StatefulWidget {
   const HomepageWidget({super.key});
 
@@ -137,8 +45,7 @@ class _HomepageWidgetState extends State<HomepageWidget> {
         if (state is RefreshTokenExpiredState) {
           AutoRouter.of(context).push(const LoginRouteView());
 
-          // Navigator.pushReplacement(context,
-          //     MaterialPageRoute(builder: (context) => const LoginPageView()));
+         
         }
       },
       builder: (context, state) {
@@ -355,9 +262,7 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
+                                
                                 isConversionAmountChanged == false
                                     ? CustomContainerWithInputField(
                                         readonly: true,

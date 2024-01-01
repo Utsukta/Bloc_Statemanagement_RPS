@@ -7,7 +7,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class RegisterRepository {
-  final storetoken = const FlutterSecureStorage();
+  final storetoken = const FlutterSecureStorage(); //use get_it here
   Future registerapi(
       String email, String password, String confirmpassword) async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -35,6 +35,8 @@ class RegisterRepository {
         Uri.parse('https://rpsremit.truestreamz.com/api/v1/register'),
         body: registermodel.toJson());
     final responsedata = jsonDecode(response.body);
+    print(responsedata);
+    print(response);
 
     switch (response.statusCode) {
       case 200:
@@ -43,7 +45,7 @@ class RegisterRepository {
         await storetoken.write(key: 'refreshToken', value: refreshToken);
         await storetoken.write(key: 'accessToken', value: accessToken);
 
-        return response;
+        return responsedata;
 
       //changed
       case 400:
@@ -53,7 +55,6 @@ class RegisterRepository {
         throw UnprocessableEntity(error: responsedata["error"]);
 
       case 500:
-
       default:
         throw Defaultexception(error: responsedata["error"]);
     }
